@@ -38,7 +38,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Our Address",
-      details: ["House No. 1007, Vastushree Residency,", "Sopankaka Nagar, Gujarwadi Road,", "Katraj, Pune - 411 046"]
+      details: ["Office No. 1007, Vastushree Residency,", "Sopankaka Nagar, Gujarwadi Road,", "Katraj, Pune - 411 046"]
     },
     {
       icon: Phone,
