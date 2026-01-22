@@ -63,13 +63,8 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <a href="#home" onClick={() => scrollToSection("#home")} className="flex items-center gap-3">
-              <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto" />
-              <div className="hidden sm:block">
-                <h1 className="text-xl font-bold text-secondary">
-                  <span className="text-primary">Xview</span> Global Services LLP
-                </h1>
-              </div>
+            <a href="#home" onClick={() => scrollToSection("#home")} className="flex items-center">
+              <img src={xviewLogo} alt="Xview Global Services LLP" className="h-14 w-auto" />
             </a>
 
             {/* Desktop Navigation */}

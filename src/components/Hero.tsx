@@ -79,11 +79,7 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
-              <span className="text-primary inline-block animate-glow">X</span>
-              <span className="inline-block">view</span>{" "}
-              <span className="bg-gradient-to-r from-white to-white/80 bg-clip-text text-transparent">Global</span>
-              <br />
-              <span className="text-white/90 inline-block mt-2">Services LLP</span>
+              <span className="text-primary inline-block animate-glow">Xview Global Services LLP</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 mb-4 italic animate-fade-in-up font-light" style={{ animationDelay: "0.2s" }}>
@@ -108,7 +104,7 @@ const Hero = () => {
                 size="lg"
                 variant="outline"
                 onClick={() => scrollToSection("#about")}
-                className="border-white/30 text-white hover:bg-white/10 hover:text-white backdrop-blur-sm text-lg px-8 py-6 hover:scale-105 transition-all duration-300 hover:border-primary"
+                className="border-white bg-white/10 text-white hover:bg-white/20 hover:text-white backdrop-blur-sm text-lg px-8 py-6 hover:scale-105 transition-all duration-300 hover:border-primary"
               >
                 Learn More
               </Button>
