@@ -79,7 +79,7 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
-              <span className="text-primary inline-block animate-glow">Xview</span>{" "}
+              <span className="text-white inline-block animate-glow">Xview</span>{" "}
               <span className="text-white">Global Services LLP</span>
             </h1>
 
