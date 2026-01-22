@@ -18,12 +18,14 @@ import {
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Services = () => {
   const [activeService, setActiveService] = useState(0);
 
   const services = [
     {
+      id: "customer-support",
       icon: Headphones,
       title: "Customer Support Services",
       description: "Comprehensive customer support solutions to enhance your customer experience.",
@@ -36,6 +38,7 @@ const Services = () => {
       color: "from-orange-500 to-orange-600"
     },
     {
+      id: "it-outsourcing",
       icon: Monitor,
       title: "IT Outsourcing",
       description: "Complete IT solutions to keep your systems running smoothly and securely.",
@@ -47,6 +50,7 @@ const Services = () => {
       color: "from-blue-500 to-blue-600"
     },
     {
+      id: "hr-outsourcing",
       icon: Users,
       title: "Human Resource Outsourcing",
       description: "Streamline your HR operations with our comprehensive HR solutions.",
@@ -58,6 +62,7 @@ const Services = () => {
       color: "from-green-500 to-green-600"
     },
     {
+      id: "finance-accounting",
       icon: Calculator,
       title: "Finance and Accounting",
       description: "Expert financial services to keep your business on track.",
@@ -69,6 +74,7 @@ const Services = () => {
       color: "from-purple-500 to-purple-600"
     },
     {
+      id: "bpo-services",
       icon: Briefcase,
       title: "Business Process Outsourcing",
       description: "End-to-end business process management for optimal efficiency.",
@@ -79,6 +85,7 @@ const Services = () => {
       color: "from-pink-500 to-pink-600"
     },
     {
+      id: "administrative-support",
       icon: FileText,
       title: "Administrative Support",
       description: "Professional administrative services to streamline your operations.",
@@ -126,10 +133,12 @@ const Services = () => {
               <p className="text-muted-foreground mb-4">
                 {service.description}
               </p>
-              <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80 group/btn">
-                Learn More
-                <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
-              </Button>
+              <Link to={`/services/${service.id}`}>
+                <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80 group/btn">
+                  Learn More
+                  <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
+                </Button>
+              </Link>
             </div>
           ))}
         </div>
