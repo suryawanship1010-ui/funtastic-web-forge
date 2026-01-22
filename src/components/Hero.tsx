@@ -116,7 +116,7 @@ const Hero = () => {
               <div className="group cursor-pointer">
                 <div className="flex items-center gap-2 text-primary mb-1 group-hover:scale-110 transition-transform duration-300">
                   <Users className="h-6 w-6 animate-bounce-slow" />
-                  <span className="text-3xl font-bold">100+</span>
+                  <span className="text-3xl font-bold">50+</span>
                 </div>
                 <p className="text-white/60 text-sm group-hover:text-white/80 transition-colors">Happy Clients</p>
               </div>
