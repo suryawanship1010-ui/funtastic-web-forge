@@ -6,7 +6,7 @@ const WhyChooseUs = () => {
       icon: Award,
       title: "Expertise",
       description: "Our team of professionals has extensive experience in their respective fields.",
-      stat: "10+",
+      stat: "2+",
       statLabel: "Years Experience"
     },
     {
