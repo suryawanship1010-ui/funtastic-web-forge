@@ -80,7 +80,7 @@ const Hero = () => {
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
               <span className="text-white inline-block animate-glow">Xview</span>{" "}
-              <span className="text-white">Global Services LLP</span>
+              <span className="text-white inline-block animate-glow">Global Services LLP</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 mb-4 italic animate-fade-in-up font-light" style={{ animationDelay: "0.2s" }}>
@@ -88,7 +88,7 @@ const Hero = () => {
             </p>
 
             <p className="text-white/70 mb-8 max-w-lg animate-fade-in-up text-lg leading-relaxed" style={{ animationDelay: "0.3s" }}>
-              A Business Process Outsourcing (BPO) company providing specialized services 
+              A Business Process Outsourcing company providing specialized services 
               by handling customer support, IT services, human resources, finance, and digital marketing.
             </p>
 

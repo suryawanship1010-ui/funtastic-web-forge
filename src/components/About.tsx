@@ -22,7 +22,7 @@ const About = () => {
             Who We Are
           </h2>
           <p className="text-muted-foreground text-lg">
-            <span className="text-primary font-semibold">Xview</span> Global Services LLP is a Business Process Outsourcing and third party contract company that provides specialized 
+            <span className="text-primary font-semibold">Xview</span> Global Services LLP is a Business Process Outsourcing and third party company that provides specialized 
             services to other businesses by handling various operational tasks. These tasks can range from customer 
             support and IT services to human resources, finance, and digital marketing.
           </p>
