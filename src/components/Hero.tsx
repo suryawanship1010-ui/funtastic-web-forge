@@ -79,7 +79,8 @@ const Hero = () => {
             </div>
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
-              <span className="text-primary inline-block animate-glow">Xview Global Services LLP</span>
+              <span className="text-primary inline-block animate-glow">Xview</span>{" "}
+              <span className="text-white">Global Services LLP</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 mb-4 italic animate-fade-in-up font-light" style={{ animationDelay: "0.2s" }}>
