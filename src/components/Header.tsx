@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone, Mail } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import xviewLogo from "@/assets/xview-logo.jpg";
+import xviewLogo from "@/assets/xview-logo-new.jpg";
 
 const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -67,9 +67,8 @@ const Header = () => {
               <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto" />
               <div className="hidden sm:block">
                 <h1 className="text-xl font-bold text-secondary">
-                  <span className="text-primary">X</span>view Global
+                  <span className="text-primary">Xview</span> Global Services LLP
                 </h1>
-                <p className="text-xs text-muted-foreground">Services LLP</p>
               </div>
             </a>
 

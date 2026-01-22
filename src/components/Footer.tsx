@@ -1,5 +1,5 @@
 import { MapPin, Phone, Mail, Globe, Linkedin, Twitter, Facebook, Instagram, ArrowUp } from "lucide-react";
-import xviewLogo from "@/assets/xview-logo.jpg";
+import xviewLogo from "@/assets/xview-logo-new.jpg";
 
 const Footer = () => {
   const scrollToTop = () => {
@@ -34,9 +34,8 @@ const Footer = () => {
               <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto rounded" />
               <div>
                 <h3 className="text-xl font-bold text-white">
-                  <span className="text-primary">X</span>view Global
+                  <span className="text-primary">Xview</span> Global Services LLP
                 </h3>
-                <p className="text-xs text-white/60">Services LLP</p>
               </div>
             </div>
             <p className="text-white/70 mb-6 italic">
