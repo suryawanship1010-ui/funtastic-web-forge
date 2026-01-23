@@ -38,7 +38,7 @@ const Contact = () => {
     {
       icon: MapPin,
       title: "Our Address",
-      details: ["Office No. 1007, Vastushree Residency,", "Sopankaka Nagar, Gujarwadi Road,", "Katraj, Pune - 411 046"]
+      details: ["House No. 1007, Vastushree Residency,", "Sopankaka Nagar, Gujarwadi Road,", "Katraj, Pune - 411 046"]
     },
     {
       icon: Phone,
@@ -118,7 +118,7 @@ const Contact = () => {
                   <Clock className="h-5 w-5 text-primary" />
                   <h4 className="font-semibold text-white">Business Hours</h4>
                 </div>
-                <p className="text-white/70">Monday - Friday: 9:00 AM - 6:00 PM IST</p>
+                <p className="text-white/70">Monday - Friday: 10:00 AM - 08:00 PM IST</p>
                 <p className="text-white/70">24/7 Support Available for Clients</p>
               </div>
             </div>
