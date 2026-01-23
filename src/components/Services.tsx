@@ -14,7 +14,9 @@ import {
   Phone,
   Database,
   FolderOpen,
-  ArrowRight
+  ArrowRight,
+  ShoppingCart,
+  ClipboardList
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -45,15 +47,15 @@ const Services = () => {
       subServices: [
         { icon: Cloud, name: "Managed IT Services", desc: "Comprehensive IT management to keep your systems running smoothly." },
         { icon: Cloud, name: "Cloud Services", desc: "Secure and scalable cloud solutions to enhance your business operations." },
-        { icon: Shield, name: "Cybersecurity", desc: "Robust security measures to protect your data and systems from threats." }
+        { icon: Shield, name: "Development & Support", desc: "Custom software development and technical support for your business needs." }
       ],
       color: "from-blue-500 to-blue-600"
     },
     {
       id: "hr-outsourcing",
       icon: Users,
-      title: "Human Resource Outsourcing",
-      description: "Streamline your HR operations with our comprehensive HR solutions.",
+      title: "Process Outsourcing",
+      description: "Streamline your business processes with our comprehensive outsourcing solutions.",
       subServices: [
         { icon: UserCheck, name: "Recruitment Services", desc: "Efficient and effective recruitment processes to find the best talent for your business." },
         { icon: CreditCard, name: "Payroll Management", desc: "Accurate and timely payroll processing to ensure employee satisfaction." },
@@ -64,14 +66,26 @@ const Services = () => {
     {
       id: "finance-accounting",
       icon: Calculator,
-      title: "Finance and Accounting",
-      description: "Expert financial services to keep your business on track.",
+      title: "Finance & Procurement",
+      description: "Expert financial and procurement services to optimize your business operations.",
       subServices: [
         { icon: FileText, name: "Bookkeeping", desc: "Accurate and up-to-date financial records to keep your business on track." },
         { icon: TrendingUp, name: "Tax Preparation", desc: "Expert tax services to ensure compliance and optimize your tax strategy." },
         { icon: Calculator, name: "Financial Analysis", desc: "In-depth financial analysis to help you make informed business decisions." }
       ],
       color: "from-purple-500 to-purple-600"
+    },
+    {
+      id: "procurement-services",
+      icon: ShoppingCart,
+      title: "Procurement & Purchasing Services",
+      description: "End-to-end procurement solutions to streamline your purchasing operations.",
+      subServices: [
+        { icon: ClipboardList, name: "Strategic Sourcing", desc: "Supplier research, RFQ/RFP creation, cost optimization and negotiations support." },
+        { icon: ShoppingCart, name: "Purchase Order Management", desc: "PR review, PO creation, order confirmation and ERP system updates." },
+        { icon: Building, name: "Vendor Management", desc: "Vendor onboarding, supplier coordination, performance monitoring and compliance." }
+      ],
+      color: "from-indigo-500 to-indigo-600"
     },
     {
       id: "bpo-services",
@@ -115,22 +129,22 @@ const Services = () => {
         </div>
 
         {/* Services Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <div className="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 mb-16">
           {services.map((service, index) => (
             <div
               key={service.title}
-              className={`group bg-card rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-border ${
+              className={`group bg-card rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-border ${
                 activeService === index ? "ring-2 ring-primary" : ""
               }`}
               onClick={() => setActiveService(index)}
             >
-              <div className={`w-16 h-16 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-6 group-hover:scale-110 transition-transform`}>
-                <service.icon className="h-8 w-8 text-white" />
+              <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center mb-4 group-hover:scale-110 transition-transform`}>
+                <service.icon className="h-7 w-7 text-white" />
               </div>
-              <h3 className="text-xl font-bold text-foreground mb-3 group-hover:text-primary transition-colors">
+              <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
                 {service.title}
               </h3>
-              <p className="text-muted-foreground mb-4">
+              <p className="text-muted-foreground text-sm mb-4">
                 {service.description}
               </p>
               <Link to={`/services/${service.id}`}>

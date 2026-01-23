@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
 import { ArrowLeft, ArrowRight, CheckCircle, Phone, Mail, Globe, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import Header from "@/components/Header";
+import ServicePageHeader from "@/components/ServicePageHeader";
 import Footer from "@/components/Footer";
 import { 
   Headphones, 
@@ -39,7 +39,13 @@ import {
   BarChart3,
   PhoneCall,
   Laptop,
-  Mail as MailIcon
+  Mail as MailIcon,
+  ShoppingCart,
+  ClipboardList,
+  Truck,
+  Receipt,
+  Search,
+  Package
 } from "lucide-react";
 
 const servicesData = {
@@ -125,7 +131,7 @@ const servicesData = {
       },
       {
         icon: Code,
-        name: "Software Development",
+        name: "Development & Support",
         description: "Custom software development tailored to your business needs. From web applications to mobile apps and enterprise solutions.",
         features: ["Custom web apps", "Mobile development", "API integration", "Legacy modernization", "QA & testing"]
       }
@@ -133,23 +139,23 @@ const servicesData = {
     stats: [
       { value: "99.9%", label: "Uptime Guaranteed" },
       { value: "40%", label: "Cost Reduction" },
-      { value: "500+", label: "Systems Managed" },
-      { value: "ISO 27001", label: "Certified" }
+      { value: "50+", label: "Systems Managed" },
+      { value: "Expert-Certified", label: "Professionals" }
     ]
   },
   "hr-outsourcing": {
     id: "hr-outsourcing",
     icon: Users,
-    title: "Human Resource Outsourcing",
-    tagline: "Streamline HR Operations, Empower Your Workforce",
-    description: "Transform your HR operations with our comprehensive human resource outsourcing solutions. We handle everything from recruitment to payroll, allowing you to focus on strategic initiatives while we take care of day-to-day HR functions.",
+    title: "Process Outsourcing",
+    tagline: "Streamline Operations, Empower Your Workforce",
+    description: "Transform your business processes with our comprehensive outsourcing solutions. We handle everything from recruitment to payroll, allowing you to focus on strategic initiatives while we take care of day-to-day operations.",
     color: "from-green-500 to-green-600",
     heroImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=600&fit=crop",
     benefits: [
       { icon: UserPlus, title: "Top Talent Access", desc: "Find the best candidates with our proven recruitment processes" },
-      { icon: Clock, title: "Time Savings", desc: "Free up your team's time from administrative HR tasks" },
+      { icon: Clock, title: "Time Savings", desc: "Free up your team's time from administrative tasks" },
       { icon: Shield, title: "Compliance Assured", desc: "Stay compliant with labor laws and regulations" },
-      { icon: TrendingUp, title: "Strategic HR", desc: "Transform HR from cost center to strategic partner" }
+      { icon: TrendingUp, title: "Strategic Focus", desc: "Transform operations from cost center to strategic partner" }
     ],
     services: [
       {
@@ -178,16 +184,16 @@ const servicesData = {
       }
     ],
     stats: [
-      { value: "35%", label: "Hiring Cost Reduction" },
-      { value: "99.8%", label: "Payroll Accuracy" },
-      { value: "50%", label: "Time Saved on HR Tasks" },
+      { value: "35%", label: "Cost Reduction" },
+      { value: "99.8%", label: "Accuracy Rate" },
+      { value: "50%", label: "Time Saved" },
       { value: "100%", label: "Compliance Rate" }
     ]
   },
   "finance-accounting": {
     id: "finance-accounting",
     icon: Calculator,
-    title: "Finance and Accounting Services",
+    title: "Finance & Procurement Services",
     tagline: "Financial Excellence for Business Success",
     description: "Our finance and accounting outsourcing services provide you with expert financial management without the overhead of an in-house team. From bookkeeping to strategic financial planning, we deliver accuracy, compliance, and valuable insights.",
     color: "from-purple-500 to-purple-600",
@@ -227,8 +233,67 @@ const servicesData = {
     stats: [
       { value: "99.9%", label: "Accuracy Rate" },
       { value: "50%", label: "Cost Reduction" },
-      { value: "100%", label: "On-time Delivery" },
-      { value: "CPA", label: "Certified Team" }
+      { value: "50+", label: "Clients Served" },
+      { value: "Expert-Certified", label: "Professionals" }
+    ]
+  },
+  "procurement-services": {
+    id: "procurement-services",
+    icon: ShoppingCart,
+    title: "Procurement & Purchasing Services",
+    tagline: "Strategic Sourcing for Optimal Value",
+    description: "Our comprehensive procurement and purchasing services help you streamline your supply chain, reduce costs, and build strong vendor relationships. From strategic sourcing to invoice management, we handle the complete procure-to-pay cycle.",
+    color: "from-indigo-500 to-indigo-600",
+    heroImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=600&fit=crop",
+    benefits: [
+      { icon: Target, title: "Cost Optimization", desc: "Strategic sourcing and negotiations to reduce procurement costs" },
+      { icon: Clock, title: "Faster Processing", desc: "Streamlined workflows for quick purchase order processing" },
+      { icon: Shield, title: "Compliance", desc: "Ensure compliance with procurement policies and regulations" },
+      { icon: TrendingUp, title: "Visibility", desc: "Complete visibility into spending and supplier performance" }
+    ],
+    services: [
+      {
+        icon: Search,
+        name: "Strategic Sourcing",
+        description: "Comprehensive supplier research and benchmarking to find the best vendors. We handle RFQ/RFP creation, cost optimization, and supplier negotiations.",
+        features: ["Supplier research & benchmarking", "RFQ/RFP creation and comparison", "Cost optimization and market analysis", "Supplier negotiations support", "Contract management"]
+      },
+      {
+        icon: ClipboardList,
+        name: "Purchase Requisition & Order Management",
+        description: "End-to-end purchase order management from requisition to confirmation. We ensure accurate processing and timely updates.",
+        features: ["PR review & validation", "Purchase order creation & processing", "Order confirmation & follow-up", "ERP/Procurement system updates", "Approval workflow management"]
+      },
+      {
+        icon: Building,
+        name: "Vendor & Supplier Management",
+        description: "Complete vendor lifecycle management including onboarding, performance monitoring, and relationship management.",
+        features: ["Vendor onboarding & documentation", "Supplier communication & coordination", "Performance monitoring & compliance checks", "Maintaining supplier records & scorecards", "Vendor risk assessment"]
+      },
+      {
+        icon: Truck,
+        name: "Order Tracking & Delivery Coordination",
+        description: "Real-time order tracking and delivery coordination to ensure timely receipt of goods and services.",
+        features: ["Shipment tracking & status updates", "Delivery scheduling with suppliers", "Managing delays, shortages & replacements", "Communication between warehouse & vendors", "Receipt confirmation"]
+      },
+      {
+        icon: Receipt,
+        name: "Invoice & Payment Support (P2P)",
+        description: "Complete procure-to-pay support including invoice matching, validation, and payment follow-up.",
+        features: ["2-way / 3-way matching", "Invoice validation & discrepancy resolution", "GRN/receipt coordination", "Payment follow-up support", "Dispute resolution"]
+      },
+      {
+        icon: BarChart3,
+        name: "Procurement Reporting & Analytics",
+        description: "Comprehensive procurement analytics and reporting to drive data-informed decisions and optimize spending.",
+        features: ["Spend analysis and cost-saving reports", "Supplier performance dashboards", "PO cycle time tracking", "Monthly/quarterly SLA reporting", "Procurement KPI monitoring"]
+      }
+    ],
+    stats: [
+      { value: "25%", label: "Cost Savings" },
+      { value: "99%", label: "Order Accuracy" },
+      { value: "50+", label: "Clients Served" },
+      { value: "24/7", label: "Support Available" }
     ]
   },
   "bpo-services": {
@@ -332,6 +397,7 @@ const allServicesOrder = [
   "it-outsourcing", 
   "hr-outsourcing",
   "finance-accounting",
+  "procurement-services",
   "bpo-services",
   "administrative-support"
 ];
@@ -367,7 +433,7 @@ const ServicesPage = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      <Header />
+      <ServicePageHeader />
       
       {/* Hero Section */}
       <section className="relative py-24 bg-secondary overflow-hidden">
@@ -405,7 +471,7 @@ const ServicesPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {service.stats.map((stat) => (
               <div key={stat.label}>
-                <div className="text-3xl md:text-4xl font-bold text-primary-foreground">{stat.value}</div>
+                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">{stat.value}</div>
                 <div className="text-primary-foreground/80 text-sm mt-1">{stat.label}</div>
               </div>
             ))}
@@ -536,7 +602,7 @@ const ServicesPage = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">Explore Our Other Services</h2>
-          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
             {allServicesOrder.filter(id => id !== serviceId).map((id) => {
               const s = servicesData[id as keyof typeof servicesData];
               const SIcon = s.icon;

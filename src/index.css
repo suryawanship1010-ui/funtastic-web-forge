@@ -202,6 +202,15 @@
   .animate-particle {
     animation: particle 5s ease-in-out infinite;
   }
+
+  .animate-slide-in-x {
+    animation: slideInX 0.8s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+  }
+
+  .animate-fade-slide-right {
+    animation: fadeSlideRight 0.6s ease-out forwards;
+    opacity: 0;
+  }
 }
 
 @keyframes float {
@@ -355,5 +364,31 @@
   100% {
     transform: translateY(-100px) translateX(20px);
     opacity: 0;
+  }
+}
+
+@keyframes slideInX {
+  0% {
+    transform: translateX(-100px) scale(2);
+    opacity: 0;
+  }
+  50% {
+    transform: translateX(10px) scale(1.2);
+    opacity: 1;
+  }
+  100% {
+    transform: translateX(0) scale(1);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeSlideRight {
+  0% {
+    transform: translateX(-20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateX(0);
+    opacity: 1;
   }
 }

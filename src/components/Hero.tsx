@@ -78,9 +78,13 @@ const Hero = () => {
               <Sparkles className="h-4 w-4 text-primary animate-pulse" />
             </div>
 
-            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
-              {/* <span className="text-white inline-block animate-glow">Xview</span>{" "} */}
-              <span className="text-white inline-block animate-glow">Xview Global Services LLP</span>
+            {/* Company Name with X Animation */}
+            <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up overflow-hidden">
+              <span className="inline-block">
+                <span className="inline-block text-primary animate-slide-in-x font-extrabold" style={{ animationDelay: "0.1s" }}>X</span>
+                <span className="inline-block text-primary animate-fade-slide-right" style={{ animationDelay: "0.3s" }}>view</span>
+              </span>{" "}
+              <span className="text-white animate-fade-slide-right inline-block" style={{ animationDelay: "0.5s" }}>Global Services LLP</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 mb-4 italic animate-fade-in-up font-light" style={{ animationDelay: "0.2s" }}>
@@ -140,8 +144,8 @@ const Hero = () => {
           {/* Visual Element - Enhanced Globe Animation */}
           <div className="hidden lg:block relative animate-fade-in-right">
             <div className="relative w-full h-[600px]">
-              {/* Logo Display */}
-              <div className="absolute top-0 right-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/20 animate-float z-20">
+              {/* Logo Display - Changed position to bottom left */}
+              <div className="absolute bottom-8 left-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/20 animate-float z-20">
                 <img 
                   src={xviewLogo} 
                   alt="Xview Logo" 
@@ -174,20 +178,24 @@ const Hero = () => {
 
               {/* Floating Service Cards */}
               <div className="absolute top-16 right-8 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float-delayed border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group">
-                <div className="text-primary font-bold group-hover:scale-105 transition-transform">IT Services</div>
-                <p className="text-white/60 text-xs mt-1">Cloud & Development</p>
+                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Development & Support</div>
+                <p className="text-white/60 text-xs mt-1">Cloud & IT Services</p>
               </div>
               <div className="absolute bottom-32 left-0 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group" style={{ animationDelay: "1.5s" }}>
                 <div className="text-primary font-bold group-hover:scale-105 transition-transform">Customer Support</div>
                 <p className="text-white/60 text-xs mt-1">24/7 Assistance</p>
               </div>
               <div className="absolute top-1/2 -right-4 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group" style={{ animationDelay: "2s" }}>
-                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Finance</div>
-                <p className="text-white/60 text-xs mt-1">Accounting & Tax</p>
+                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Finance & Procurement</div>
+                <p className="text-white/60 text-xs mt-1">Accounting & Purchasing</p>
               </div>
               <div className="absolute bottom-16 right-20 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group" style={{ animationDelay: "2.5s" }}>
-                <div className="text-primary font-bold group-hover:scale-105 transition-transform">HR Solutions</div>
-                <p className="text-white/60 text-xs mt-1">Talent Management</p>
+                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Process Outsourcing</div>
+                <p className="text-white/60 text-xs mt-1">BPO Solutions</p>
+              </div>
+              <div className="absolute top-32 left-8 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group" style={{ animationDelay: "3s" }}>
+                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Data Entry</div>
+                <p className="text-white/60 text-xs mt-1">Accurate Processing</p>
               </div>
             </div>
           </div>
