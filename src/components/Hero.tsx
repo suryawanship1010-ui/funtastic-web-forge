@@ -80,7 +80,7 @@ const Hero = () => {
 
             <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold leading-tight mb-6 animate-fade-in-up">
               {/* <span className="text-white inline-block animate-glow">Xview</span>{" "} */}
-              <span className="text-white inline-block animate-glow">Xview Global Services LLP</span>
+              <span className="text-white inline-block animate-glow">Xview Global Services LLP.</span>
             </h1>
 
             <p className="text-xl md:text-2xl text-white/90 mb-4 italic animate-fade-in-up font-light" style={{ animationDelay: "0.2s" }}>
@@ -141,13 +141,13 @@ const Hero = () => {
           <div className="hidden lg:block relative animate-fade-in-right">
             <div className="relative w-full h-[600px]">
               {/* Logo Display */}
-              <div className="absolute top-0 right-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/20 animate-float z-20">
+              {/* <div className="absolute top-0 right-0 bg-white/10 backdrop-blur-md p-4 rounded-2xl shadow-2xl border border-white/20 animate-float z-20">
                 <img 
                   src={xviewLogo} 
                   alt="Xview Logo" 
                   className="h-16 w-auto rounded-lg"
                 />
-              </div>
+              </div> */}
 
               {/* Central Globe with Rings */}
               <div className="absolute inset-0 flex items-center justify-center">
