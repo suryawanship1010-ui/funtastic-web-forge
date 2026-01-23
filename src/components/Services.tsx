@@ -40,7 +40,7 @@ const Services = () => {
     {
       id: "it-outsourcing",
       icon: Monitor,
-      title: "IT Outsourcing",
+      title: "IT Services",
       description: "Complete IT solutions to keep your systems running smoothly and securely.",
       subServices: [
         { icon: Cloud, name: "Managed IT Services", desc: "Comprehensive IT management to keep your systems running smoothly." },
