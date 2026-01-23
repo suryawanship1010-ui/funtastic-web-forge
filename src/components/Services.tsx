@@ -148,7 +148,7 @@ const Services = () => {
                 {service.description}
               </p>
               <Link to={`/services/${service.id}`}>
-                <Button variant="ghost" className="p-0 h-auto text-primary hover:text-primary/80 group/btn">
+                <Button variant="ghost" className="p-0 h-auto text-primary hover:text-white/80 group/btn">
                   Learn More
                   <ArrowRight className="ml-2 h-4 w-4 group-hover/btn:translate-x-1 transition-transform" />
                 </Button>
