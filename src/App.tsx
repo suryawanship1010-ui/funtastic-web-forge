@@ -4,13 +4,48 @@ import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/contexts/AuthContext";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 import Index from "./pages/Index";
 import ServicesPage from "./pages/ServicesPage";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
+import ProtectedRoute from "./components/ProtectedRoute";
+import AdminLayout from "./pages/admin/AdminLayout";
+import Dashboard from "./pages/admin/Dashboard";
+import Inquiries from "./pages/admin/Inquiries";
+import Analytics from "./pages/admin/Analytics";
+import Blogs from "./pages/admin/Blogs";
 
 const queryClient = new QueryClient();
+
+const AppContent = () => {
+  useVisitorTracking();
+  
+  return (
+    <Routes>
+      <Route path="/" element={<Index />} />
+      <Route path="/services/:serviceId" element={<ServicesPage />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/register" element={<Register />} />
+      <Route
+        path="/admin"
+        element={
+          <ProtectedRoute requireAdmin>
+            <AdminLayout />
+          </ProtectedRoute>
+        }
+      >
+        <Route index element={<Dashboard />} />
+        <Route path="inquiries" element={<Inquiries />} />
+        <Route path="analytics" element={<Analytics />} />
+        <Route path="blogs" element={<Blogs />} />
+      </Route>
+      {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+};
 
 const App = () => (
   <QueryClientProvider client={queryClient}>
@@ -19,14 +54,7 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/services/:serviceId" element={<ServicesPage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-            <Route path="*" element={<NotFound />} />
-          </Routes>
+          <AppContent />
         </BrowserRouter>
       </TooltipProvider>
     </AuthProvider>
