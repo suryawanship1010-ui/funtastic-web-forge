@@ -4,6 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useState } from "react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -19,11 +20,49 @@ const Contact = () => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 1000));
+    try {
+      // Save to Supabase database
+      const { error } = await supabase
+        .from("contact_inquiries")
+        .insert({
+          name: formData.name.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone.trim() || null,
+          company: formData.company.trim() || null,
+          message: formData.message.trim(),
+        });
+
+      if (error) {
+        console.error("Error saving inquiry:", error);
+        toast.error("Failed to submit inquiry. Please try again.");
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Create WhatsApp message
+      const whatsappNumber = "919423840960";
+      const whatsappMessage = encodeURIComponent(
+        `*New Inquiry from XView Global Website*\n\n` +
+        `*Name:* ${formData.name}\n` +
+        `*Email:* ${formData.email}\n` +
+        `${formData.phone ? `*Phone:* ${formData.phone}\n` : ""}` +
+        `${formData.company ? `*Company:* ${formData.company}\n` : ""}` +
+        `*Message:*\n${formData.message}`
+      );
+
+      toast.success("Thank you for your message! Redirecting to WhatsApp...");
+      setFormData({ name: "", email: "", phone: "", company: "", message: "" });
+      
+      // Open WhatsApp in new tab
+      setTimeout(() => {
+        window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, "_blank");
+      }, 1000);
+
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      toast.error("Something went wrong. Please try again.");
+    }
     
-    toast.success("Thank you for your message! We'll get back to you soon.");
-    setFormData({ name: "", email: "", phone: "", company: "", message: "" });
     setIsSubmitting(false);
   };
 
