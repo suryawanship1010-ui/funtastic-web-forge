@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Menu, X, Phone, Mail, User, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,10 +16,6 @@ const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const { user, isAdmin, signOut } = useAuth();
-  const navigate = useNavigate();
-
-  // Get user's full name from metadata
-  const userFullName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -33,16 +29,11 @@ const Header = () => {
     { href: "#home", label: "Home" },
     { href: "#about", label: "About Us" },
     { href: "#services", label: "Services" },
-    { href: "/blog", label: "Blogs", isRoute: true },
+    { href: "#why-us", label: "Why Choose Us" },
     { href: "#contact", label: "Contact" },
   ];
 
-  const scrollToSection = (href: string, isRoute?: boolean) => {
-    if (isRoute) {
-      navigate(href);
-      setIsMobileMenuOpen(false);
-      return;
-    }
+  const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
     if (element) {
       element.scrollIntoView({ behavior: "smooth" });
@@ -87,16 +78,16 @@ const Header = () => {
         <div className="container mx-auto px-4">
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
-            <Link to="/" className="flex items-center">
+            <a href="#home" onClick={() => scrollToSection("#home")} className="flex items-center">
               <img src={xviewLogo} alt="Xview Global Services LLP" className="h-14 w-auto" />
-            </Link>
+            </a>
 
             {/* Desktop Navigation */}
             <nav className="hidden lg:flex items-center gap-8">
               {navLinks.map((link) => (
                 <button
                   key={link.href}
-                  onClick={() => scrollToSection(link.href, (link as any).isRoute)}
+                  onClick={() => scrollToSection(link.href)}
                   className="text-foreground hover:text-primary transition-colors font-medium relative group"
                 >
                   {link.label}
@@ -112,7 +103,7 @@ const Header = () => {
                   <DropdownMenuTrigger asChild>
                     <Button variant="outline" className="gap-2">
                       <User className="h-4 w-4" />
-                      {userFullName}
+                      {user.email?.split("@")[0]}
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
@@ -164,7 +155,7 @@ const Header = () => {
               {navLinks.map((link) => (
                 <button
                   key={link.href}
-                  onClick={() => scrollToSection(link.href, (link as any).isRoute)}
+                  onClick={() => scrollToSection(link.href)}
                   className="block w-full text-left py-3 px-4 text-foreground hover:text-primary hover:bg-muted rounded-lg transition-colors"
                 >
                   {link.label}
