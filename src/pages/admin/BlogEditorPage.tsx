@@ -10,17 +10,10 @@ import {
   Clock, 
   Eye, 
   Send, 
-  Bold, 
-  Italic, 
-  Heading2, 
-  List, 
-  Link, 
-  Quote, 
-  Code,
   ImagePlus,
   X,
   CalendarIcon,
-  Sparkles
+  Share2
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -40,9 +33,9 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover";
-import { cn } from "@/lib/utils";
 import type { Tables } from "@/integrations/supabase/types";
-import ImageGallery from "@/components/admin/ImageGallery";
+import RichTextEditor from "@/components/admin/RichTextEditor";
+import OGPreview from "@/components/admin/OGPreview";
 
 type Blog = Tables<"blogs"> & { scheduled_at?: string | null };
 type Category = { id: string; name: string; slug: string };
@@ -58,6 +51,7 @@ const BlogEditorPage = () => {
   const [categories, setCategories] = useState<Category[]>([]);
   const [lastSaved, setLastSaved] = useState<Date | null>(null);
   const [previewMode, setPreviewMode] = useState(false);
+  const [showOGPreview, setShowOGPreview] = useState(false);
 
   // Form state
   const [title, setTitle] = useState("");
@@ -183,27 +177,6 @@ const BlogEditorPage = () => {
     }
   };
 
-  const insertFormatting = (before: string, after: string = "") => {
-    const textarea = document.getElementById("content-editor") as HTMLTextAreaElement;
-    if (!textarea) return;
-
-    const start = textarea.selectionStart;
-    const end = textarea.selectionEnd;
-    const selectedText = content.substring(start, end);
-    const newContent =
-      content.substring(0, start) +
-      before +
-      selectedText +
-      after +
-      content.substring(end);
-
-    setContent(newContent);
-    setTimeout(() => {
-      textarea.focus();
-      textarea.setSelectionRange(start + before.length, end + before.length);
-    }, 0);
-  };
-
   const saveBlog = async (publishStatus: "draft" | "published" | "scheduled") => {
     if (!title.trim() || !slug.trim()) {
       toast.error("Title and slug are required");
@@ -308,19 +281,6 @@ const BlogEditorPage = () => {
     }
   }, [title, content, excerpt]);
 
-  const renderMarkdownPreview = (text: string) => {
-    return text
-      .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
-      .replace(/\*(.*?)\*/g, "<em>$1</em>")
-      .replace(/^## (.*$)/gm, "<h2 class='text-xl font-bold mt-4 mb-2'>$1</h2>")
-      .replace(/^### (.*$)/gm, "<h3 class='text-lg font-semibold mt-3 mb-1'>$1</h3>")
-      .replace(/^- (.*$)/gm, "<li class='ml-4'>$1</li>")
-      .replace(/\[(.*?)\]\((.*?)\)/g, "<a href='$2' class='text-primary underline'>$1</a>")
-      .replace(/`(.*?)`/g, "<code class='bg-muted px-1 rounded'>$1</code>")
-      .replace(/^> (.*$)/gm, "<blockquote class='border-l-4 border-primary pl-4 italic my-2'>$1</blockquote>")
-      .replace(/\n/g, "<br />");
-  };
-
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -355,6 +315,15 @@ const BlogEditorPage = () => {
             >
               {status}
             </Badge>
+
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => setShowOGPreview(!showOGPreview)}
+            >
+              <Share2 className="h-4 w-4 mr-1" />
+              Social
+            </Button>
 
             <Button 
               variant="outline" 
@@ -423,243 +392,150 @@ const BlogEditorPage = () => {
       </div>
 
       {/* Main Editor */}
-      <div className="max-w-5xl mx-auto px-4 py-6">
-        {previewMode ? (
-          <div className="bg-card rounded-xl border p-8 shadow-lg">
-            {featuredImage && (
-              <img 
-                src={featuredImage} 
-                alt={title} 
-                className="w-full h-64 object-cover rounded-lg mb-6"
-              />
-            )}
-            <h1 className="text-3xl font-bold mb-4">{title || "Untitled"}</h1>
-            {excerpt && <p className="text-lg text-muted-foreground mb-6">{excerpt}</p>}
-            <div 
-              className="prose prose-sm max-w-none"
-              dangerouslySetInnerHTML={{ __html: renderMarkdownPreview(content) }}
-            />
-          </div>
-        ) : (
-          <div className="space-y-6">
-            {/* Title Input */}
-            <div className="bg-card rounded-xl border p-6 shadow-sm">
-              <Input
-                value={title}
-                onChange={(e) => handleTitleChange(e.target.value)}
-                placeholder="Enter your blog title..."
-                className="text-2xl font-bold border-0 px-0 focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/50"
-              />
-              <div className="flex items-center gap-4 mt-4 pt-4 border-t">
-                <div className="flex-1">
-                  <Label className="text-xs text-muted-foreground">Slug</Label>
+      <div className="max-w-6xl mx-auto px-4 py-6">
+        <div className={`grid gap-6 ${showOGPreview ? "lg:grid-cols-3" : ""}`}>
+          <div className={showOGPreview ? "lg:col-span-2" : ""}>
+            {previewMode ? (
+              <div className="bg-card rounded-xl border p-8 shadow-lg">
+                {featuredImage && (
+                  <img 
+                    src={featuredImage} 
+                    alt={title} 
+                    className="w-full h-64 object-cover rounded-lg mb-6"
+                  />
+                )}
+                <h1 className="text-3xl font-bold mb-4">{title || "Untitled"}</h1>
+                {excerpt && <p className="text-lg text-muted-foreground mb-6">{excerpt}</p>}
+                <div 
+                  className="prose prose-sm max-w-none"
+                  dangerouslySetInnerHTML={{ __html: content }}
+                />
+              </div>
+            ) : (
+              <div className="space-y-6">
+                {/* Title Input */}
+                <div className="bg-card rounded-xl border p-6 shadow-sm">
                   <Input
-                    value={slug}
-                    onChange={(e) => setSlug(generateSlug(e.target.value))}
-                    placeholder="blog-post-url"
-                    className="mt-1 h-8 text-sm"
+                    value={title}
+                    onChange={(e) => handleTitleChange(e.target.value)}
+                    placeholder="Enter your blog title..."
+                    className="text-2xl font-bold border-0 px-0 focus-visible:ring-0 bg-transparent placeholder:text-muted-foreground/50"
                   />
-                </div>
-                <div className="flex-1">
-                  <Label className="text-xs text-muted-foreground">Category</Label>
-                  <Select value={categoryId} onValueChange={setCategoryId}>
-                    <SelectTrigger className="mt-1 h-8">
-                      <SelectValue placeholder="Select category" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      {categories.map((cat) => (
-                        <SelectItem key={cat.id} value={cat.id}>
-                          {cat.name}
-                        </SelectItem>
-                      ))}
-                    </SelectContent>
-                  </Select>
-                </div>
-              </div>
-            </div>
-
-            {/* Featured Image */}
-            <div className="bg-card rounded-xl border p-6 shadow-sm">
-              <Label className="text-sm font-medium mb-3 block">Featured Image</Label>
-              {featuredImage ? (
-                <div className="relative group">
-                  <img
-                    src={featuredImage}
-                    alt="Featured"
-                    className="w-full h-48 object-cover rounded-lg"
-                  />
-                  <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
-                    <Button
-                      variant="destructive"
-                      size="sm"
-                      onClick={() => setFeaturedImage("")}
-                    >
-                      <X className="h-4 w-4 mr-1" />
-                      Remove
-                    </Button>
-                  </div>
-                </div>
-              ) : (
-                <label className="block">
-                  <div className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
-                    <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
-                      <ImagePlus className="h-6 w-6 text-primary" />
+                  <div className="flex items-center gap-4 mt-4 pt-4 border-t">
+                    <div className="flex-1">
+                      <Label className="text-xs text-muted-foreground">Slug</Label>
+                      <Input
+                        value={slug}
+                        onChange={(e) => setSlug(generateSlug(e.target.value))}
+                        placeholder="blog-post-url"
+                        className="mt-1 h-8 text-sm"
+                      />
                     </div>
-                    <p className="text-sm font-medium">
-                      {isUploading ? "Uploading..." : "Click to upload"}
-                    </p>
-                    <p className="text-xs text-muted-foreground mt-1">
-                      PNG, JPG up to 5MB
-                    </p>
+                    <div className="flex-1">
+                      <Label className="text-xs text-muted-foreground">Category</Label>
+                      <Select value={categoryId} onValueChange={setCategoryId}>
+                        <SelectTrigger className="mt-1 h-8">
+                          <SelectValue placeholder="Select category" />
+                        </SelectTrigger>
+                        <SelectContent>
+                          {categories.map((cat) => (
+                            <SelectItem key={cat.id} value={cat.id}>
+                              {cat.name}
+                            </SelectItem>
+                          ))}
+                        </SelectContent>
+                      </Select>
+                    </div>
                   </div>
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={handleImageUpload}
-                    className="hidden"
-                    disabled={isUploading}
-                  />
-                </label>
-              )}
-            </div>
+                </div>
 
-            {/* Excerpt */}
-            <div className="bg-card rounded-xl border p-6 shadow-sm">
-              <Label className="text-sm font-medium mb-3 block">Excerpt</Label>
-              <Textarea
-                value={excerpt}
-                onChange={(e) => setExcerpt(e.target.value)}
-                placeholder="A brief description of your post (shown in previews)..."
-                rows={2}
-                className="resize-none"
-              />
-            </div>
+                {/* Featured Image */}
+                <div className="bg-card rounded-xl border p-6 shadow-sm">
+                  <Label className="text-sm font-medium mb-3 block">Featured Image</Label>
+                  {featuredImage ? (
+                    <div className="relative group">
+                      <img
+                        src={featuredImage}
+                        alt="Featured"
+                        className="w-full h-48 object-cover rounded-lg"
+                      />
+                      <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity rounded-lg flex items-center justify-center">
+                        <Button
+                          variant="destructive"
+                          size="sm"
+                          onClick={() => setFeaturedImage("")}
+                        >
+                          <X className="h-4 w-4 mr-1" />
+                          Remove
+                        </Button>
+                      </div>
+                    </div>
+                  ) : (
+                    <label className="block">
+                      <div className="border-2 border-dashed rounded-xl p-8 text-center cursor-pointer hover:border-primary hover:bg-primary/5 transition-all">
+                        <div className="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center mx-auto mb-3">
+                          <ImagePlus className="h-6 w-6 text-primary" />
+                        </div>
+                        <p className="text-sm font-medium">
+                          {isUploading ? "Uploading..." : "Click to upload"}
+                        </p>
+                        <p className="text-xs text-muted-foreground mt-1">
+                          PNG, JPG up to 5MB
+                        </p>
+                      </div>
+                      <input
+                        type="file"
+                        accept="image/*"
+                        onChange={handleImageUpload}
+                        className="hidden"
+                        disabled={isUploading}
+                      />
+                    </label>
+                  )}
+                </div>
 
-            {/* Content Editor */}
-            <div className="bg-card rounded-xl border shadow-sm overflow-hidden">
-              {/* Toolbar */}
-              <div className="flex items-center gap-1 p-3 border-b bg-muted/30">
-                <div className="flex items-center gap-1 pr-3 border-r">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("**", "**")}
-                    title="Bold (Ctrl+B)"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Bold className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("*", "*")}
-                    title="Italic (Ctrl+I)"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Italic className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex items-center gap-1 px-3 border-r">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("## ")}
-                    title="Heading"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Heading2 className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("- ")}
-                    title="List"
-                    className="h-8 w-8 p-0"
-                  >
-                    <List className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("> ")}
-                    title="Quote"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Quote className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="flex items-center gap-1 px-3 border-r">
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("[", "](url)")}
-                    title="Link"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Link className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    type="button"
-                    size="sm"
-                    variant="ghost"
-                    onClick={() => insertFormatting("`", "`")}
-                    title="Code"
-                    className="h-8 w-8 p-0"
-                  >
-                    <Code className="h-4 w-4" />
-                  </Button>
-                </div>
-                <div className="pl-3">
-                  <ImageGallery
-                    onInsert={(url, alt) => {
-                      insertFormatting(`![${alt || "image"}](${url})`);
-                    }}
-                    trigger={
-                      <Button
-                        type="button"
-                        size="sm"
-                        variant="ghost"
-                        title="Insert Image"
-                        className="h-8 px-2"
-                      >
-                        <ImagePlus className="h-4 w-4 mr-1" />
-                        <span className="text-xs">Gallery</span>
-                      </Button>
-                    }
+                {/* Excerpt */}
+                <div className="bg-card rounded-xl border p-6 shadow-sm">
+                  <Label className="text-sm font-medium mb-3 block">Excerpt</Label>
+                  <Textarea
+                    value={excerpt}
+                    onChange={(e) => setExcerpt(e.target.value)}
+                    placeholder="A brief description of your post (shown in previews and social shares)..."
+                    rows={2}
+                    className="resize-none"
                   />
+                  <p className="text-xs text-muted-foreground mt-2">
+                    This will be used as the meta description for SEO and social media sharing.
+                  </p>
                 </div>
-                <div className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
-                  <Sparkles className="h-3 w-3" />
-                  Markdown supported
+
+                {/* Rich Text Editor */}
+                <div>
+                  <Label className="text-sm font-medium mb-3 block">Content</Label>
+                  <RichTextEditor
+                    content={content}
+                    onChange={setContent}
+                    placeholder="Start writing your amazing blog post..."
+                  />
                 </div>
               </div>
-
-              {/* Editor */}
-              <Textarea
-                id="content-editor"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="Start writing your amazing blog post...
-
-Use Markdown for formatting:
-- **bold** for bold text
-- *italic* for italic text
-- ## Heading for headings
-- - item for lists
-- [text](url) for links
-- `code` for inline code"
-                rows={20}
-                className="border-0 rounded-none focus-visible:ring-0 resize-none font-mono text-sm"
-              />
-            </div>
+            )}
           </div>
-        )}
+
+          {/* OG Preview Sidebar */}
+          {showOGPreview && (
+            <div className="lg:col-span-1">
+              <div className="sticky top-20">
+                <OGPreview
+                  title={title}
+                  description={excerpt}
+                  image={featuredImage}
+                  url={`${window.location.origin}/blog/${slug}`}
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );
