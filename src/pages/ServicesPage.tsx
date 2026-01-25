@@ -393,16 +393,10 @@ const ServicesPage = () => {
     <div className="min-h-screen bg-background">
       <ServicePageHeader />
       
-      {/* Hero Section - Dark Navy with Subtle Image Overlay */}
+      {/* Hero Section - Dark Navy Solid Background */}
       <section className="relative overflow-hidden">
-        {/* Dark Navy Background */}
+        {/* Dark Navy Background - Solid Color */}
         <div className="absolute inset-0 bg-[hsl(220,30%,15%)]" />
-        
-        {/* Subtle Corporate Image Overlay */}
-        <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1920')" }}
-        />
         
         {/* Content */}
         <div className="relative z-10 py-16 md:py-24">
@@ -418,7 +412,7 @@ const ServicesPage = () => {
             
             <div className="max-w-3xl">
               {/* Icon Badge */}
-              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-br ${service.color} mb-6`}>
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 mb-6">
                 <Icon className="h-8 w-8 text-white" />
               </div>
               
@@ -438,8 +432,8 @@ const ServicesPage = () => {
           </div>
         </div>
         
-        {/* Orange Stats Bar */}
-        <div className={`relative z-10 bg-gradient-to-r ${service.color} py-6`}>
+        {/* Orange Stats Bar - Same color for all services */}
+        <div className="relative z-10 bg-gradient-to-r from-orange-500 to-orange-600 py-6">
           <div className="container mx-auto px-4">
             <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
               {service.stats.map((stat) => (
@@ -491,7 +485,7 @@ const ServicesPage = () => {
             {service.services.map((item) => (
               <div key={item.name} className="bg-card rounded-2xl p-8 shadow-lg border border-border hover:shadow-xl transition-all">
                 <div className="flex items-start gap-4 mb-6">
-                  <div className={`w-14 h-14 rounded-xl bg-gradient-to-br ${service.color} flex items-center justify-center flex-shrink-0`}>
+                  <div className="w-14 h-14 rounded-xl bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center flex-shrink-0">
                     <item.icon className="h-7 w-7 text-white" />
                   </div>
                   <div>
@@ -586,7 +580,7 @@ const ServicesPage = () => {
                   to={`/services/${id}`}
                   className="bg-card p-4 rounded-xl border border-border hover:border-primary hover:shadow-lg transition-all text-center group"
                 >
-                  <div className={`w-12 h-12 mx-auto rounded-lg bg-gradient-to-br ${s.color} flex items-center justify-center mb-3 group-hover:scale-110 transition-transform`}>
+                  <div className="w-12 h-12 mx-auto rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center mb-3 group-hover:scale-110 transition-transform">
                     <SIcon className="h-6 w-6 text-white" />
                   </div>
                   <h3 className="font-semibold text-foreground text-sm group-hover:text-primary transition-colors">{s.title}</h3>
