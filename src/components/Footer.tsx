@@ -117,7 +117,9 @@ const Footer = () => {
             {/* Social Links */}
             <div className="flex items-center gap-4 mt-6">
               <a 
-                href="#" 
+                href="https://in.linkedin.com/in/xview-global-services-llp-378681373" 
+                target="_blank"
+                rel="noopener noreferrer"
                 className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-primary transition-colors"
                 aria-label="LinkedIn"
               >
