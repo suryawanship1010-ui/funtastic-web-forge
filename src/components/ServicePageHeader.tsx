@@ -21,7 +21,7 @@ const ServicePageHeader = () => {
     { href: "/#home", label: "Home" },
     { href: "/#about", label: "About Us" },
     { href: "/#services", label: "Services" },
-    { href: "/#why-us", label: "Why Choose Us" },
+    { href: "/blog", label: "Blogs" },
     { href: "/#contact", label: "Contact" },
   ];
 
