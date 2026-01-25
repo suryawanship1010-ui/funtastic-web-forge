@@ -435,48 +435,66 @@ const ServicesPage = () => {
     <div className="min-h-screen bg-background">
       <ServicePageHeader />
       
-      {/* Hero Section */}
-      <section className="relative py-24 bg-secondary overflow-hidden">
+      {/* Hero Section - Redesigned */}
+      <section className="relative py-20 lg:py-28 bg-secondary overflow-hidden">
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-20"
+          className="absolute inset-0 bg-cover bg-center opacity-15"
           style={{ backgroundImage: `url(${service.heroImage})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/90 to-secondary/70" />
+        <div className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary/95 to-secondary/80" />
         
         <div className="container mx-auto px-4 relative z-10">
-          <Link to="/#services" className="inline-flex items-center gap-2 text-white/60 hover:text-primary transition-colors mb-8">
-            <ArrowLeft className="h-4 w-4" />
-            Back to All Services
-          </Link>
-          
-          <div className="flex items-center gap-6 mb-6">
-            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}>
-              <Icon className="h-10 w-10 text-white" />
-            </div>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Left Content */}
             <div>
-              <h1 className="text-4xl md:text-5xl font-bold text-white">{service.title}</h1>
-              <p className="text-xl text-primary mt-2">{service.tagline}</p>
+              <div className="flex items-center gap-4 mb-6">
+                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}>
+                  <Icon className="h-8 w-8 text-white" />
+                </div>
+                <span className="text-primary font-semibold text-lg">{service.tagline}</span>
+              </div>
+              
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                {service.title}
+              </h1>
+              
+              <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
+                {service.description}
+              </p>
+              
+              <div className="flex flex-wrap gap-4">
+                <Link to="/#contact">
+                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
+                    Get Started
+                    <ArrowRight className="ml-2 h-5 w-5" />
+                  </Button>
+                </Link>
+                <a href="tel:+919423840960">
+                  <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
+                    <Phone className="mr-2 h-5 w-5" />
+                    Talk to Expert
+                  </Button>
+                </a>
+              </div>
+            </div>
+            
+            {/* Right Content - Stats Grid */}
+            <div className="grid grid-cols-2 gap-4">
+              {service.stats.map((stat, index) => (
+                <div 
+                  key={stat.label} 
+                  className={`bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all ${index === 0 ? 'lg:translate-y-4' : ''} ${index === 3 ? 'lg:-translate-y-4' : ''}`}
+                >
+                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
+                  <div className="text-white/70 text-sm">{stat.label}</div>
+                </div>
+              ))}
             </div>
           </div>
-          
-          <p className="text-white/80 text-lg max-w-3xl leading-relaxed">
-            {service.description}
-          </p>
         </div>
-      </section>
-
-      {/* Stats Bar */}
-      <section className="bg-primary py-8">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            {service.stats.map((stat) => (
-              <div key={stat.label}>
-                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">{stat.value}</div>
-                <div className="text-primary-foreground/80 text-sm mt-1">{stat.label}</div>
-              </div>
-            ))}
-          </div>
-        </div>
+        
+        {/* Decorative Elements */}
+        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-muted/30 to-transparent" />
       </section>
 
       {/* Benefits Section */}
