@@ -18,6 +18,7 @@ import Dashboard from "./pages/admin/Dashboard";
 import Inquiries from "./pages/admin/Inquiries";
 import Analytics from "./pages/admin/Analytics";
 import Blogs from "./pages/admin/Blogs";
+import BlogEditorPage from "./pages/admin/BlogEditorPage";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,22 @@ const AppContent = () => {
         <Route path="analytics" element={<Analytics />} />
         <Route path="blogs" element={<Blogs />} />
       </Route>
+      <Route
+        path="/admin/blogs/new"
+        element={
+          <ProtectedRoute requireAdmin>
+            <BlogEditorPage />
+          </ProtectedRoute>
+        }
+      />
+      <Route
+        path="/admin/blogs/:id"
+        element={
+          <ProtectedRoute requireAdmin>
+            <BlogEditorPage />
+          </ProtectedRoute>
+        }
+      />
       {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
       <Route path="*" element={<NotFound />} />
     </Routes>
