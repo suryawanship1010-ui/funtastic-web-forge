@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Calendar, Clock, ArrowLeft, Share2 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { Helmet } from "react-helmet-async";
 
 interface Blog {
   id: string;
@@ -133,8 +134,34 @@ const BlogPost = () => {
     );
   }
 
+  const siteUrl = window.location.origin;
+  const postUrl = `${siteUrl}/blog/${blog.slug}`;
+
   return (
     <div className="min-h-screen bg-background">
+      <Helmet>
+        <title>{blog.title} | XView Blog</title>
+        <meta name="description" content={blog.excerpt || blog.title} />
+        
+        {/* Open Graph / Facebook */}
+        <meta property="og:type" content="article" />
+        <meta property="og:url" content={postUrl} />
+        <meta property="og:title" content={blog.title} />
+        <meta property="og:description" content={blog.excerpt || blog.title} />
+        {blog.featured_image && <meta property="og:image" content={blog.featured_image} />}
+        
+        {/* Twitter */}
+        <meta name="twitter:card" content="summary_large_image" />
+        <meta name="twitter:url" content={postUrl} />
+        <meta name="twitter:title" content={blog.title} />
+        <meta name="twitter:description" content={blog.excerpt || blog.title} />
+        {blog.featured_image && <meta name="twitter:image" content={blog.featured_image} />}
+        
+        {/* Article specific */}
+        <meta property="article:published_time" content={blog.published_at || blog.created_at} />
+        {blog.category_name && <meta property="article:section" content={blog.category_name} />}
+      </Helmet>
+      
       <Header />
       <article className="pt-32 pb-16">
         <div className="container mx-auto px-4 max-w-3xl">
@@ -168,7 +195,10 @@ const BlogPost = () => {
           </div>
 
           {blog.content && (
-            <div className="prose prose-lg max-w-none text-foreground" dangerouslySetInnerHTML={{ __html: `<p class="mb-4">${renderMarkdown(blog.content)}</p>` }} />
+            <div 
+              className="prose prose-lg max-w-none text-foreground prose-headings:text-foreground prose-p:text-foreground prose-strong:text-foreground prose-a:text-primary" 
+              dangerouslySetInnerHTML={{ __html: blog.content }} 
+            />
           )}
 
           <div className="mt-12 pt-8 border-t flex items-center justify-between">
