@@ -1,11 +1,12 @@
 import { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Edit, Trash2 } from "lucide-react";
 import { format } from "date-fns";
 import { toast } from "sonner";
+import { Plus, Edit, Trash2 } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Blog = Tables<"blogs">;
@@ -36,7 +37,7 @@ const Blogs = () => {
   }, []);
 
   const deleteBlog = async (id: string) => {
-    if (!confirm("Are you sure you want to delete this blog post?")) return;
+    if (!confirm("Delete this blog post?")) return;
 
     try {
       const { error } = await supabase.from("blogs").delete().eq("id", id);
@@ -58,12 +59,14 @@ const Blogs = () => {
   }
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <h1 className="text-3xl font-bold">Blog Posts</h1>
-        <Button>
-          <Plus className="h-4 w-4 mr-2" />
-          New Post
+        <h1 className="text-2xl font-bold">Blogs</h1>
+        <Button asChild size="sm">
+          <Link to="/admin/blogs/new">
+            <Plus className="h-4 w-4 mr-1" />
+            New Post
+          </Link>
         </Button>
       </div>
 
@@ -74,42 +77,35 @@ const Blogs = () => {
           </CardContent>
         </Card>
       ) : (
-        <div className="grid gap-4">
+        <div className="space-y-2">
           {blogs.map((blog) => (
             <Card key={blog.id}>
-              <CardHeader className="pb-3">
-                <div className="flex items-start justify-between">
-                  <div className="space-y-1">
-                    <CardTitle className="text-lg">{blog.title}</CardTitle>
-                    <p className="text-sm text-muted-foreground">/{blog.slug}</p>
+              <CardContent className="p-4">
+                <div className="flex items-start justify-between gap-4">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 mb-1">
+                      <span className="font-medium truncate">{blog.title}</span>
+                      <Badge variant={blog.status === "published" ? "default" : "secondary"}>
+                        {blog.status}
+                      </Badge>
+                    </div>
+                    <p className="text-sm text-muted-foreground">
+                      {format(new Date(blog.created_at!), "MMM d, yyyy")}
+                    </p>
                   </div>
-                  <Badge
-                    variant={blog.status === "published" ? "default" : "secondary"}
-                  >
-                    {blog.status}
-                  </Badge>
-                </div>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                {blog.excerpt && (
-                  <p className="text-muted-foreground text-sm">{blog.excerpt}</p>
-                )}
-                <div className="flex items-center justify-between">
-                  <span className="text-xs text-muted-foreground">
-                    Created: {format(new Date(blog.created_at!), "PPp")}
-                  </span>
-                  <div className="flex gap-2">
-                    <Button size="sm" variant="outline">
-                      <Edit className="h-4 w-4 mr-1" />
-                      Edit
+                  <div className="flex gap-1">
+                    <Button variant="ghost" size="icon" asChild>
+                      <Link to={`/admin/blogs/${blog.id}`}>
+                        <Edit className="h-4 w-4" />
+                      </Link>
                     </Button>
-                    <Button
-                      size="sm"
-                      variant="destructive"
+                    <Button 
+                      variant="ghost" 
+                      size="icon" 
                       onClick={() => deleteBlog(blog.id)}
+                      className="text-destructive hover:text-destructive"
                     >
-                      <Trash2 className="h-4 w-4 mr-1" />
-                      Delete
+                      <Trash2 className="h-4 w-4" />
                     </Button>
                   </div>
                 </div>
