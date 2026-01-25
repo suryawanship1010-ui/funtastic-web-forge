@@ -393,65 +393,62 @@ const ServicesPage = () => {
     <div className="min-h-screen bg-background">
       <ServicePageHeader />
       
-      {/* Hero Section - Clean Gradient Design */}
-      <section className={`relative py-20 md:py-32 overflow-hidden bg-gradient-to-br ${service.color}`}>
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-white/10 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-white/5 rounded-full" />
-        </div>
+      {/* Hero Section - Dark Navy with Subtle Image Overlay */}
+      <section className="relative overflow-hidden">
+        {/* Dark Navy Background */}
+        <div className="absolute inset-0 bg-[hsl(220,30%,15%)]" />
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Icon Badge */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 shadow-xl">
-              <Icon className="h-10 w-10 text-white" />
-            </div>
+        {/* Subtle Corporate Image Overlay */}
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?w=1920')" }}
+        />
+        
+        {/* Content */}
+        <div className="relative z-10 py-16 md:py-24">
+          <div className="container mx-auto px-4">
+            {/* Back Link */}
+            <Link 
+              to="/#services" 
+              className="inline-flex items-center text-primary hover:text-primary/80 transition-colors mb-8 text-sm font-medium"
+            >
+              <ArrowLeft className="h-4 w-4 mr-2" />
+              Back to All Services
+            </Link>
             
-            {/* Tagline */}
-            <p className="text-white/80 text-lg mb-4 tracking-wide">{service.tagline}</p>
-            
-            {/* Main Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              {service.title}
-            </h1>
-            
-            {/* Description */}
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-10 max-w-2xl mx-auto">
-              {service.description}
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/#contact">
-                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all text-base px-8">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <a href="tel:+919423840960">
-                <Button size="lg" className="bg-white/20 border-2 border-white text-white hover:bg-white hover:text-foreground backdrop-blur-sm text-base px-8 transition-all">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Talk to Expert
-                </Button>
-              </a>
+            <div className="max-w-3xl">
+              {/* Icon Badge */}
+              <div className={`inline-flex items-center justify-center w-16 h-16 rounded-lg bg-gradient-to-br ${service.color} mb-6`}>
+                <Icon className="h-8 w-8 text-white" />
+              </div>
+              
+              {/* Main Title */}
+              <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-3 leading-tight">
+                {service.title}
+              </h1>
+              
+              {/* Tagline */}
+              <p className="text-primary text-lg mb-6 italic">{service.tagline}</p>
+              
+              {/* Description */}
+              <p className="text-lg text-white/80 leading-relaxed max-w-2xl">
+                {service.description}
+              </p>
             </div>
           </div>
         </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="py-12 bg-muted/50 border-b border-border">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
-            {service.stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-muted-foreground text-sm mt-1">{stat.label}</div>
-              </div>
-            ))}
+        
+        {/* Orange Stats Bar */}
+        <div className={`relative z-10 bg-gradient-to-r ${service.color} py-6`}>
+          <div className="container mx-auto px-4">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+              {service.stats.map((stat) => (
+                <div key={stat.label} className="text-center">
+                  <div className="text-2xl md:text-3xl font-bold text-white">{stat.value}</div>
+                  <div className="text-white/80 text-sm mt-1">{stat.label}</div>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
       </section>
