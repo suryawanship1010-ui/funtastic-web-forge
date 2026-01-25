@@ -172,31 +172,35 @@ const Hero = () => {
                 </div>
               </div>
 
-              {/* Floating Service Cards */}
-              {/* Top Card */}
-              <div className="absolute top-8 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float-delayed border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20">
+              {/* Floating Service Cards - Star Pattern (5 points) */}
+              {/* Top Point (12 o'clock) */}
+              <div className="absolute top-0 left-1/2 -translate-x-1/2 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float-delayed border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20">
                 <div className="text-primary font-bold group-hover:scale-105 transition-transform">Development & Support</div>
                 <p className="text-white/60 text-xs mt-1">Cloud & IT Services</p>
               </div>
               
-              {/* Left Side - Two Stacked Cards */}
-              <div className="absolute left-0 top-1/3 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-10" style={{ animationDelay: "1s" }}>
+              {/* Top-Right Point (2 o'clock) */}
+              <div className="absolute top-[25%] right-0 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "0.5s" }}>
                 <div className="text-primary font-bold group-hover:scale-105 transition-transform">Customer Support</div>
                 <p className="text-white/60 text-xs mt-1">24/7 Assistance</p>
               </div>
-              <div className="absolute left-8 top-1/2 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "1.5s" }}>
-                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Data Entry</div>
-                <p className="text-white/60 text-xs mt-1">Accurate Processing</p>
-              </div>
               
-              {/* Right Side - Two Stacked Cards */}
-              <div className="absolute right-0 top-1/3 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-10" style={{ animationDelay: "2s" }}>
+              {/* Bottom-Right Point (4 o'clock) */}
+              <div className="absolute bottom-[15%] right-[10%] bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "1s" }}>
                 <div className="text-primary font-bold group-hover:scale-105 transition-transform">Finance & Procurement</div>
                 <p className="text-white/60 text-xs mt-1">Accounting & Purchasing</p>
               </div>
-              <div className="absolute right-8 top-1/2 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "2.5s" }}>
+              
+              {/* Bottom-Left Point (8 o'clock) */}
+              <div className="absolute bottom-[15%] left-[10%] bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "1.5s" }}>
                 <div className="text-primary font-bold group-hover:scale-105 transition-transform">Process Outsourcing</div>
                 <p className="text-white/60 text-xs mt-1">BPO Solutions</p>
+              </div>
+              
+              {/* Top-Left Point (10 o'clock) */}
+              <div className="absolute top-[25%] left-0 bg-white/10 backdrop-blur-md p-4 rounded-xl shadow-xl animate-float border border-white/20 hover:bg-white/20 transition-colors cursor-pointer group z-20" style={{ animationDelay: "2s" }}>
+                <div className="text-primary font-bold group-hover:scale-105 transition-transform">Data Entry</div>
+                <p className="text-white/60 text-xs mt-1">Accurate Processing</p>
               </div>
             </div>
           </div>
