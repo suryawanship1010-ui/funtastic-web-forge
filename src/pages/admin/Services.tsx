@@ -41,16 +41,6 @@ const iconOptions = [
   "Zap", "Target", "Clock", "TrendingUp", "Settings", "MessageSquare"
 ];
 
-const colorOptions = [
-  { label: "Orange", from: "orange-500", to: "orange-600" },
-  { label: "Blue", from: "blue-500", to: "blue-600" },
-  { label: "Green", from: "green-500", to: "green-600" },
-  { label: "Purple", from: "purple-500", to: "purple-600" },
-  { label: "Pink", from: "pink-500", to: "pink-600" },
-  { label: "Teal", from: "teal-500", to: "teal-600" },
-  { label: "Indigo", from: "indigo-500", to: "indigo-600" },
-];
-
 const AdminServices = () => {
   const queryClient = useQueryClient();
   const [editingService, setEditingService] = useState<Service | null>(null);
@@ -66,8 +56,6 @@ const AdminServices = () => {
     title: "",
     description: "",
     icon_name: "Briefcase",
-    color_from: "orange-500",
-    color_to: "orange-600",
     is_active: true
   });
 
@@ -122,8 +110,8 @@ const AdminServices = () => {
           title: data.title!,
           description: data.description!,
           icon_name: data.icon_name || "Briefcase",
-          color_from: data.color_from || "orange-500",
-          color_to: data.color_to || "orange-600",
+          color_from: "orange-500",
+          color_to: "orange-600",
           is_active: data.is_active ?? true,
           display_order: maxOrder + 1
         };
@@ -220,8 +208,6 @@ const AdminServices = () => {
       title: "",
       description: "",
       icon_name: "Briefcase",
-      color_from: "orange-500",
-      color_to: "orange-600",
       is_active: true
     });
   };
@@ -242,8 +228,6 @@ const AdminServices = () => {
       title: service.title,
       description: service.description,
       icon_name: service.icon_name,
-      color_from: service.color_from,
-      color_to: service.color_to,
       is_active: service.is_active
     });
     setIsDialogOpen(true);
@@ -353,23 +337,6 @@ const AdminServices = () => {
                   ))}
                 </select>
               </div>
-              <div>
-                <Label>Color Theme</Label>
-                <div className="grid grid-cols-4 gap-2 mt-2">
-                  {colorOptions.map((color) => (
-                    <button
-                      key={color.label}
-                      type="button"
-                      onClick={() => setFormData({ ...formData, color_from: color.from, color_to: color.to })}
-                      className={`p-3 rounded-md bg-gradient-to-br from-${color.from} to-${color.to} text-white text-xs font-medium ${
-                        formData.color_from === color.from ? "ring-2 ring-offset-2 ring-primary" : ""
-                      }`}
-                    >
-                      {color.label}
-                    </button>
-                  ))}
-                </div>
-              </div>
               <div className="flex items-center gap-2">
                 <Switch
                   checked={formData.is_active}
@@ -473,7 +440,7 @@ const AdminServices = () => {
                       </TableCell>
                       <TableCell>
                         <div className="flex items-center gap-3">
-                          <div className={`w-10 h-10 rounded-lg bg-gradient-to-br from-${service.color_from} to-${service.color_to} flex items-center justify-center`}>
+                          <div className="w-10 h-10 rounded-lg bg-gradient-to-br from-orange-500 to-orange-600 flex items-center justify-center">
                             <span className="text-white text-xs font-bold">{service.icon_name.slice(0, 2)}</span>
                           </div>
                           <div>
