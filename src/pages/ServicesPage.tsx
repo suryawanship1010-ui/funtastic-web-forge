@@ -48,6 +48,45 @@ import {
   Package
 } from "lucide-react";
 
+// Service-specific hero gradients and accent colors
+const serviceThemes: Record<string, { gradient: string; accent: string; pattern: string }> = {
+  "customer-support": {
+    gradient: "from-orange-600 via-orange-500 to-amber-500",
+    accent: "orange",
+    pattern: "radial-gradient(circle at 20% 80%, rgba(251,146,60,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(245,158,11,0.2) 0%, transparent 50%)"
+  },
+  "it-outsourcing": {
+    gradient: "from-blue-700 via-blue-600 to-cyan-500",
+    accent: "blue",
+    pattern: "radial-gradient(circle at 10% 90%, rgba(59,130,246,0.3) 0%, transparent 50%), radial-gradient(circle at 90% 10%, rgba(6,182,212,0.2) 0%, transparent 50%)"
+  },
+  "hr-outsourcing": {
+    gradient: "from-emerald-600 via-green-500 to-teal-500",
+    accent: "green",
+    pattern: "radial-gradient(circle at 30% 70%, rgba(16,185,129,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(20,184,166,0.2) 0%, transparent 50%)"
+  },
+  "finance-accounting": {
+    gradient: "from-violet-700 via-purple-600 to-fuchsia-500",
+    accent: "purple",
+    pattern: "radial-gradient(circle at 15% 85%, rgba(139,92,246,0.3) 0%, transparent 50%), radial-gradient(circle at 85% 15%, rgba(217,70,239,0.2) 0%, transparent 50%)"
+  },
+  "procurement-services": {
+    gradient: "from-indigo-700 via-indigo-600 to-blue-500",
+    accent: "indigo",
+    pattern: "radial-gradient(circle at 25% 75%, rgba(99,102,241,0.3) 0%, transparent 50%), radial-gradient(circle at 75% 25%, rgba(59,130,246,0.2) 0%, transparent 50%)"
+  },
+  "bpo-services": {
+    gradient: "from-rose-600 via-pink-500 to-red-500",
+    accent: "pink",
+    pattern: "radial-gradient(circle at 20% 80%, rgba(244,63,94,0.3) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(236,72,153,0.2) 0%, transparent 50%)"
+  },
+  "administrative-support": {
+    gradient: "from-slate-700 via-slate-600 to-zinc-500",
+    accent: "slate",
+    pattern: "radial-gradient(circle at 30% 70%, rgba(71,85,105,0.3) 0%, transparent 50%), radial-gradient(circle at 70% 30%, rgba(113,113,122,0.2) 0%, transparent 50%)"
+  }
+};
+
 const servicesData = {
   "customer-support": {
     id: "customer-support",
@@ -435,66 +474,81 @@ const ServicesPage = () => {
     <div className="min-h-screen bg-background">
       <ServicePageHeader />
       
-      {/* Hero Section - Redesigned */}
-      <section className="relative py-20 lg:py-28 bg-secondary overflow-hidden">
+      {/* Hero Section - Immersive Design */}
+      <section className={`relative min-h-[85vh] flex items-center overflow-hidden bg-gradient-to-br ${serviceThemes[service.id]?.gradient || 'from-primary to-primary/80'}`}>
+        {/* Background Image with Overlay */}
         <div 
-          className="absolute inset-0 bg-cover bg-center opacity-15"
+          className="absolute inset-0 bg-cover bg-center"
           style={{ backgroundImage: `url(${service.heroImage})` }}
         />
-        <div className="absolute inset-0 bg-gradient-to-br from-secondary via-secondary/95 to-secondary/80" />
+        <div className="absolute inset-0 bg-black/50" />
+        <div 
+          className="absolute inset-0" 
+          style={{ background: serviceThemes[service.id]?.pattern || '' }}
+        />
         
-        <div className="container mx-auto px-4 relative z-10">
-          <div className="grid lg:grid-cols-2 gap-12 items-center">
-            {/* Left Content */}
-            <div>
-              <div className="flex items-center gap-4 mb-6">
-                <div className={`w-16 h-16 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}>
-                  <Icon className="h-8 w-8 text-white" />
-                </div>
-                <span className="text-primary font-semibold text-lg">{service.tagline}</span>
+        {/* Animated Background Elements */}
+        <div className="absolute inset-0 overflow-hidden">
+          <div className="absolute top-1/4 -left-20 w-96 h-96 bg-white/5 rounded-full blur-3xl animate-pulse" />
+          <div className="absolute bottom-1/4 -right-20 w-80 h-80 bg-white/5 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }} />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] border border-white/10 rounded-full" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] border border-white/5 rounded-full" />
+        </div>
+        
+        <div className="container mx-auto px-4 relative z-10 py-20">
+          <div className="max-w-4xl">
+            {/* Icon Badge */}
+            <div className="inline-flex items-center gap-3 mb-8 animate-fade-in">
+              <div className={`w-14 h-14 rounded-xl bg-white/20 backdrop-blur-sm flex items-center justify-center shadow-2xl`}>
+                <Icon className="h-7 w-7 text-white" />
               </div>
-              
-              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-                {service.title}
-              </h1>
-              
-              <p className="text-white/80 text-lg leading-relaxed mb-8 max-w-xl">
-                {service.description}
-              </p>
-              
-              <div className="flex flex-wrap gap-4">
-                <Link to="/#contact">
-                  <Button size="lg" className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg">
-                    Get Started
-                    <ArrowRight className="ml-2 h-5 w-5" />
-                  </Button>
-                </Link>
-                <a href="tel:+919423840960">
-                  <Button size="lg" variant="outline" className="border-white/30 text-white hover:bg-white/10">
-                    <Phone className="mr-2 h-5 w-5" />
-                    Talk to Expert
-                  </Button>
-                </a>
-              </div>
+              <span className="text-white/90 font-medium text-lg tracking-wide">{service.tagline}</span>
             </div>
             
-            {/* Right Content - Stats Grid */}
-            <div className="grid grid-cols-2 gap-4">
+            {/* Main Title */}
+            <h1 className="text-5xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-[1.1] animate-fade-in" style={{ animationDelay: '0.1s' }}>
+              {service.title}
+            </h1>
+            
+            {/* Description */}
+            <p className="text-xl md:text-2xl text-white/80 leading-relaxed mb-10 max-w-2xl animate-fade-in" style={{ animationDelay: '0.2s' }}>
+              {service.description}
+            </p>
+            
+            {/* Stats Row - Inline Design */}
+            <div className="flex flex-wrap gap-8 mb-10 animate-fade-in" style={{ animationDelay: '0.3s' }}>
               {service.stats.map((stat, index) => (
-                <div 
-                  key={stat.label} 
-                  className={`bg-white/10 backdrop-blur-sm rounded-2xl p-6 border border-white/10 hover:bg-white/15 transition-all ${index === 0 ? 'lg:translate-y-4' : ''} ${index === 3 ? 'lg:-translate-y-4' : ''}`}
-                >
-                  <div className="text-3xl md:text-4xl font-bold text-primary mb-2">{stat.value}</div>
-                  <div className="text-white/70 text-sm">{stat.label}</div>
+                <div key={stat.label} className="text-center md:text-left">
+                  <div className="text-3xl md:text-4xl font-bold text-white">{stat.value}</div>
+                  <div className="text-white/60 text-sm mt-1">{stat.label}</div>
                 </div>
               ))}
+            </div>
+            
+            {/* CTA Buttons */}
+            <div className="flex flex-wrap gap-4 animate-fade-in" style={{ animationDelay: '0.4s' }}>
+              <Link to="/#contact">
+                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all text-base px-8">
+                  Get Started
+                  <ArrowRight className="ml-2 h-5 w-5" />
+                </Button>
+              </Link>
+              <a href="tel:+919423840960">
+                <Button size="lg" variant="outline" className="border-white/40 text-white hover:bg-white/10 backdrop-blur-sm text-base px-8">
+                  <Phone className="mr-2 h-5 w-5" />
+                  Talk to Expert
+                </Button>
+              </a>
             </div>
           </div>
         </div>
         
-        {/* Decorative Elements */}
-        <div className="absolute bottom-0 left-0 right-0 h-24 bg-gradient-to-t from-muted/30 to-transparent" />
+        {/* Bottom Wave */}
+        <div className="absolute bottom-0 left-0 right-0">
+          <svg viewBox="0 0 1440 120" fill="none" xmlns="http://www.w3.org/2000/svg" className="w-full">
+            <path d="M0 120L60 110C120 100 240 80 360 70C480 60 600 60 720 65C840 70 960 80 1080 85C1200 90 1320 90 1380 90L1440 90V120H1380C1320 120 1200 120 1080 120C960 120 840 120 720 120C600 120 480 120 360 120C240 120 120 120 60 120H0Z" fill="hsl(var(--muted))" fillOpacity="0.3"/>
+          </svg>
+        </div>
       </section>
 
       {/* Benefits Section */}
