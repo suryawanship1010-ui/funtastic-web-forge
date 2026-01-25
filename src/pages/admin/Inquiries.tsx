@@ -11,12 +11,77 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 import { format } from "date-fns";
 import { toast } from "sonner";
-import { Mail, Phone, Building, ChevronDown, ChevronUp } from "lucide-react";
+import { Mail, Phone, Building, ChevronDown, ChevronUp, Download, Reply, FileText, Sparkles } from "lucide-react";
 import type { Tables } from "@/integrations/supabase/types";
 
 type Inquiry = Tables<"contact_inquiries">;
+
+const emailTemplates = [
+  {
+    name: "Thank You",
+    subject: "Thank you for contacting XView Global",
+    body: `Dear {name},
+
+Thank you for reaching out to XView Global. We have received your inquiry and appreciate your interest in our services.
+
+Our team is currently reviewing your message and will get back to you within 1-2 business days.
+
+If you have any urgent questions, feel free to call us at +91 9423840960.
+
+Best regards,
+XView Global Team`,
+  },
+  {
+    name: "Follow Up",
+    subject: "Following up on your inquiry - XView Global",
+    body: `Dear {name},
+
+I hope this email finds you well. I wanted to follow up on your recent inquiry about our services.
+
+Would you be available for a quick call this week to discuss your requirements in more detail?
+
+Please let me know a convenient time, and I'll be happy to schedule a call.
+
+Looking forward to hearing from you.
+
+Best regards,
+XView Global Team`,
+  },
+  {
+    name: "Quote Ready",
+    subject: "Your quote is ready - XView Global",
+    body: `Dear {name},
+
+Thank you for your patience. We have prepared a customized quote based on your requirements.
+
+Please find the details attached/below. Feel free to reach out if you have any questions or need any modifications.
+
+We look forward to the opportunity to work with you.
+
+Best regards,
+XView Global Team`,
+  },
+  {
+    name: "Custom Reply",
+    subject: "Re: Your inquiry - XView Global",
+    body: `Dear {name},
+
+Thank you for your message.
+
+
+
+Best regards,
+XView Global Team`,
+  },
+];
 
 const Inquiries = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -85,6 +150,42 @@ const Inquiries = () => {
     return styles[status as keyof typeof styles] || "bg-gray-100 text-gray-700";
   };
 
+  const sendEmailWithTemplate = (inquiry: Inquiry, template: typeof emailTemplates[0]) => {
+    const subject = encodeURIComponent(template.subject);
+    const body = encodeURIComponent(template.body.replace(/{name}/g, inquiry.name.split(" ")[0]));
+    window.location.href = `mailto:${inquiry.email}?subject=${subject}&body=${body}`;
+  };
+
+  const exportToCSV = () => {
+    if (inquiries.length === 0) {
+      toast.error("No inquiries to export");
+      return;
+    }
+
+    const headers = ["Name", "Email", "Phone", "Company", "Message", "Status", "Date"];
+    const rows = inquiries.map((inq) => [
+      inq.name,
+      inq.email,
+      inq.phone || "",
+      inq.company || "",
+      `"${(inq.message || "").replace(/"/g, '""')}"`,
+      inq.status || "new",
+      format(new Date(inq.created_at!), "yyyy-MM-dd HH:mm"),
+    ]);
+
+    const csvContent = [headers.join(","), ...rows.map((row) => row.join(","))].join("\n");
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement("a");
+    link.href = url;
+    link.download = `inquiries_${format(new Date(), "yyyy-MM-dd")}.csv`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+    toast.success("Inquiries exported successfully");
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-64">
@@ -95,19 +196,25 @@ const Inquiries = () => {
 
   return (
     <div className="space-y-4">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between gap-2 flex-wrap">
         <h1 className="text-2xl font-bold">Inquiries</h1>
-        <Select value={filter} onValueChange={handleFilterChange}>
-          <SelectTrigger className="w-36">
-            <SelectValue placeholder="Filter" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="all">All</SelectItem>
-            <SelectItem value="new">New</SelectItem>
-            <SelectItem value="in_progress">In Progress</SelectItem>
-            <SelectItem value="resolved">Resolved</SelectItem>
-          </SelectContent>
-        </Select>
+        <div className="flex items-center gap-2">
+          <Button variant="outline" size="sm" onClick={exportToCSV}>
+            <Download className="h-4 w-4 mr-1" />
+            Export CSV
+          </Button>
+          <Select value={filter} onValueChange={handleFilterChange}>
+            <SelectTrigger className="w-36">
+              <SelectValue placeholder="Filter" />
+            </SelectTrigger>
+            <SelectContent>
+              <SelectItem value="all">All</SelectItem>
+              <SelectItem value="new">New</SelectItem>
+              <SelectItem value="in_progress">In Progress</SelectItem>
+              <SelectItem value="resolved">Resolved</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
       </div>
 
       {inquiries.length === 0 ? (
@@ -120,7 +227,7 @@ const Inquiries = () => {
         <div className="space-y-2">
           {inquiries.map((inquiry) => (
             <Card key={inquiry.id} className="overflow-hidden">
-              <div 
+              <div
                 className="p-4 cursor-pointer hover:bg-muted/50 transition-colors"
                 onClick={() => setExpandedId(expandedId === inquiry.id ? null : inquiry.id)}
               >
@@ -150,16 +257,16 @@ const Inquiries = () => {
               {expandedId === inquiry.id && (
                 <div className="border-t bg-muted/30 p-4 space-y-4">
                   <div className="flex flex-wrap gap-4 text-sm">
-                    <a 
-                      href={`mailto:${inquiry.email}`} 
+                    <a
+                      href={`mailto:${inquiry.email}`}
                       className="flex items-center gap-1.5 text-primary hover:underline"
                     >
                       <Mail className="h-4 w-4" />
                       {inquiry.email}
                     </a>
                     {inquiry.phone && (
-                      <a 
-                        href={`tel:${inquiry.phone}`} 
+                      <a
+                        href={`tel:${inquiry.phone}`}
                         className="flex items-center gap-1.5 text-primary hover:underline"
                       >
                         <Phone className="h-4 w-4" />
@@ -178,7 +285,37 @@ const Inquiries = () => {
                     <p className="text-sm whitespace-pre-wrap">{inquiry.message}</p>
                   </div>
 
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap items-center gap-2">
+                    {/* Reply with Template Dropdown */}
+                    <DropdownMenu>
+                      <DropdownMenuTrigger asChild>
+                        <Button size="sm" variant="default">
+                          <Reply className="h-4 w-4 mr-1" />
+                          Reply
+                        </Button>
+                      </DropdownMenuTrigger>
+                      <DropdownMenuContent align="start" className="w-48">
+                        {emailTemplates.map((template) => (
+                          <DropdownMenuItem
+                            key={template.name}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              sendEmailWithTemplate(inquiry, template);
+                            }}
+                          >
+                            {template.name === "Thank You" && <Sparkles className="h-4 w-4 mr-2" />}
+                            {template.name === "Follow Up" && <Mail className="h-4 w-4 mr-2" />}
+                            {template.name === "Quote Ready" && <FileText className="h-4 w-4 mr-2" />}
+                            {template.name === "Custom Reply" && <Reply className="h-4 w-4 mr-2" />}
+                            {template.name}
+                          </DropdownMenuItem>
+                        ))}
+                      </DropdownMenuContent>
+                    </DropdownMenu>
+
+                    <div className="flex-1" />
+
+                    {/* Status Buttons */}
                     <Button
                       size="sm"
                       variant={inquiry.status === "new" ? "default" : "outline"}
