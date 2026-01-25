@@ -52,10 +52,22 @@ const Services = () => {
       color: "from-blue-500 to-blue-600"
     },
     {
+      id: "hr-outsourcing",
+      icon: Users,
+      title: "Process Outsourcing",
+      description: "Streamline your business processes with our comprehensive outsourcing solutions.",
+      subServices: [
+        { icon: UserCheck, name: "Recruitment Services", desc: "Efficient and effective recruitment processes to find the best talent for your business." },
+        { icon: CreditCard, name: "Payroll Management", desc: "Accurate and timely payroll processing to ensure employee satisfaction." },
+        { icon: TrendingUp, name: "Employee Benefits Administration", desc: "Management of employee benefits to enhance workforce morale and retention." }
+      ],
+      color: "from-green-500 to-green-600"
+    },
+    {
       id: "finance-accounting",
       icon: Calculator,
-      title: "Finance & Accounting",
-      description: "Expert financial and accounting services to optimize your business operations.",
+      title: "Finance & Procurement",
+      description: "Expert financial and procurement services to optimize your business operations.",
       subServices: [
         { icon: FileText, name: "Bookkeeping", desc: "Accurate and up-to-date financial records to keep your business on track." },
         { icon: TrendingUp, name: "Tax Preparation", desc: "Expert tax services to ensure compliance and optimize your tax strategy." },
@@ -79,11 +91,10 @@ const Services = () => {
       id: "bpo-services",
       icon: Briefcase,
       title: "Business Process Outsourcing",
-      description: "End-to-end business process management including HR functions for optimal efficiency.",
+      description: "End-to-end business process management for optimal efficiency.",
       subServices: [
         { icon: Building, name: "Back-office Outsourcing", desc: "Tasks like payroll, billing, accounts payable/receivable and procurement." },
-        { icon: Phone, name: "Front-office Outsourcing", desc: "Customer-related services like call centers, help desks, and technical support." },
-        { icon: UserCheck, name: "HR & Recruitment Services", desc: "Recruitment, payroll management, and employee benefits administration." }
+        { icon: Phone, name: "Front-office Outsourcing", desc: "Customer-related services like call centers, help desks, and technical support." }
       ],
       color: "from-pink-500 to-pink-600"
     },

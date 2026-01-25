@@ -21,7 +21,6 @@ import Analytics from "./pages/admin/Analytics";
 import Blogs from "./pages/admin/Blogs";
 import BlogEditorPage from "./pages/admin/BlogEditorPage";
 import Categories from "./pages/admin/Categories";
-import AdminServices from "./pages/admin/Services";
 
 const queryClient = new QueryClient();
 
@@ -45,7 +44,6 @@ const AppContent = () => {
         }
       >
         <Route index element={<Dashboard />} />
-        <Route path="services" element={<AdminServices />} />
         <Route path="inquiries" element={<Inquiries />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="blogs" element={<Blogs />} />

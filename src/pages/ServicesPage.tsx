@@ -56,6 +56,7 @@ const servicesData = {
     tagline: "Exceptional Customer Experience, Delivered 24/7",
     description: "Our customer support services are designed to provide your customers with exceptional experiences across all touchpoints. We combine skilled professionals, advanced technology, and proven methodologies to handle customer interactions efficiently and professionally.",
     color: "from-orange-500 to-orange-600",
+    heroImage: "https://images.unsplash.com/photo-1553775927-a071d5a6a39a?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Clock, title: "24/7 Availability", desc: "Round-the-clock support ensuring your customers always have assistance" },
       { icon: MessageSquare, title: "Multi-channel Support", desc: "Phone, email, chat, social media - we cover all channels" },
@@ -102,6 +103,7 @@ const servicesData = {
     tagline: "Technology Solutions That Drive Business Growth",
     description: "Leverage our comprehensive IT outsourcing services to reduce costs, access specialized expertise, and focus on your core business. We provide end-to-end technology solutions that keep your systems running smoothly and securely.",
     color: "from-blue-500 to-blue-600",
+    heroImage: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Settings, title: "Expert Management", desc: "Access to certified IT professionals without recruitment hassles" },
       { icon: Shield, title: "Enhanced Security", desc: "Enterprise-grade cybersecurity protecting your digital assets" },
@@ -141,13 +143,61 @@ const servicesData = {
       { value: "Expert-Certified", label: "Professionals" }
     ]
   },
+  "hr-outsourcing": {
+    id: "hr-outsourcing",
+    icon: Users,
+    title: "Process Outsourcing",
+    tagline: "Streamline Operations, Empower Your Workforce",
+    description: "Transform your business processes with our comprehensive outsourcing solutions. We handle everything from recruitment to payroll, allowing you to focus on strategic initiatives while we take care of day-to-day operations.",
+    color: "from-green-500 to-green-600",
+    heroImage: "https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1200&h=600&fit=crop",
+    benefits: [
+      { icon: UserPlus, title: "Top Talent Access", desc: "Find the best candidates with our proven recruitment processes" },
+      { icon: Clock, title: "Time Savings", desc: "Free up your team's time from administrative tasks" },
+      { icon: Shield, title: "Compliance Assured", desc: "Stay compliant with labor laws and regulations" },
+      { icon: TrendingUp, title: "Strategic Focus", desc: "Transform operations from cost center to strategic partner" }
+    ],
+    services: [
+      {
+        icon: UserCheck,
+        name: "Recruitment & Staffing",
+        description: "End-to-end recruitment services from job posting to onboarding. We find candidates who fit your culture and have the skills you need.",
+        features: ["Job description development", "Candidate sourcing", "Screening & interviews", "Background checks", "Onboarding support"]
+      },
+      {
+        icon: CreditCard,
+        name: "Payroll Management",
+        description: "Accurate and timely payroll processing with full compliance. Handle salaries, taxes, benefits, and more without the headache.",
+        features: ["Salary processing", "Tax calculations", "Statutory compliance", "Payslip generation", "Year-end reporting"]
+      },
+      {
+        icon: Gift,
+        name: "Benefits Administration",
+        description: "Comprehensive management of employee benefits programs. From health insurance to retirement plans, we handle it all.",
+        features: ["Benefits enrollment", "Claims processing", "Vendor management", "Plan optimization", "Employee communication"]
+      },
+      {
+        icon: Clipboard,
+        name: "HR Administration",
+        description: "Complete HR administrative support including policy development, documentation, and employee relations management.",
+        features: ["Policy development", "Employee records", "Leave management", "Performance tracking", "HR reporting"]
+      }
+    ],
+    stats: [
+      { value: "35%", label: "Cost Reduction" },
+      { value: "99.8%", label: "Accuracy Rate" },
+      { value: "50%", label: "Time Saved" },
+      { value: "100%", label: "Compliance Rate" }
+    ]
+  },
   "finance-accounting": {
     id: "finance-accounting",
     icon: Calculator,
-    title: "Finance & Accounting",
+    title: "Finance & Procurement Services",
     tagline: "Financial Excellence for Business Success",
     description: "Our finance and accounting outsourcing services provide you with expert financial management without the overhead of an in-house team. From bookkeeping to strategic financial planning, we deliver accuracy, compliance, and valuable insights.",
     color: "from-purple-500 to-purple-600",
+    heroImage: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Target, title: "Accuracy Guaranteed", desc: "Error-free financial records with multiple review layers" },
       { icon: DollarSign, title: "Cost Savings", desc: "Save up to 50% compared to in-house finance teams" },
@@ -194,6 +244,7 @@ const servicesData = {
     tagline: "Strategic Sourcing for Optimal Value",
     description: "Our comprehensive procurement and purchasing services help you streamline your supply chain, reduce costs, and build strong vendor relationships. From strategic sourcing to invoice management, we handle the complete procure-to-pay cycle.",
     color: "from-indigo-500 to-indigo-600",
+    heroImage: "https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Target, title: "Cost Optimization", desc: "Strategic sourcing and negotiations to reduce procurement costs" },
       { icon: Clock, title: "Faster Processing", desc: "Streamlined workflows for quick purchase order processing" },
@@ -250,8 +301,9 @@ const servicesData = {
     icon: Briefcase,
     title: "Business Process Outsourcing",
     tagline: "Optimize Operations, Maximize Efficiency",
-    description: "Our business process outsourcing services help you streamline operations, reduce costs, and improve efficiency. We handle both back-office and front-office processes, including HR functions, allowing you to focus on core business activities and strategic growth.",
+    description: "Our business process outsourcing services help you streamline operations, reduce costs, and improve efficiency. We handle both back-office and front-office processes, allowing you to focus on core business activities and strategic growth.",
     color: "from-pink-500 to-pink-600",
+    heroImage: "https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Layers, title: "Process Excellence", desc: "Optimized workflows for maximum efficiency" },
       { icon: Zap, title: "Quick Turnaround", desc: "Fast processing times with quality assurance" },
@@ -272,28 +324,16 @@ const servicesData = {
         features: ["Call center services", "Help desk support", "Customer service", "Sales support", "Technical support"]
       },
       {
-        icon: UserCheck,
-        name: "Recruitment & Staffing",
-        description: "End-to-end recruitment services from job posting to onboarding. We find candidates who fit your culture and have the skills you need.",
-        features: ["Job description development", "Candidate sourcing", "Screening & interviews", "Background checks", "Onboarding support"]
-      },
-      {
-        icon: CreditCard,
-        name: "Payroll Management",
-        description: "Accurate and timely payroll processing with full compliance. Handle salaries, taxes, benefits, and more without the headache.",
-        features: ["Salary processing", "Tax calculations", "Statutory compliance", "Payslip generation", "Year-end reporting"]
-      },
-      {
-        icon: Gift,
-        name: "Employee Benefits Administration",
-        description: "Comprehensive management of employee benefits programs. From health insurance to retirement plans, we handle it all.",
-        features: ["Benefits enrollment", "Claims processing", "Vendor management", "Plan optimization", "Employee communication"]
-      },
-      {
         icon: Database,
         name: "Knowledge Process Outsourcing",
         description: "High-value knowledge-based processes including research, analytics, and specialized domain expertise.",
         features: ["Market research", "Data analytics", "Content management", "Legal processing", "Financial research"]
+      },
+      {
+        icon: Laptop,
+        name: "Digital Process Outsourcing",
+        description: "Modern digital services including automation, digital marketing support, and technology-enabled process management.",
+        features: ["Process automation", "Digital transformation", "Marketing operations", "Social media management", "E-commerce support"]
       }
     ],
     stats: [
@@ -310,6 +350,7 @@ const servicesData = {
     tagline: "Professional Administrative Excellence",
     description: "Our administrative support services provide you with skilled professionals who handle your day-to-day administrative tasks efficiently. From virtual assistance to document management, we ensure smooth operations so you can focus on what matters most.",
     color: "from-teal-500 to-teal-600",
+    heroImage: "https://images.unsplash.com/photo-1497366754035-f200968a6e72?w=1200&h=600&fit=crop",
     benefits: [
       { icon: Clock, title: "Time Freedom", desc: "Reclaim hours spent on administrative tasks" },
       { icon: Users, title: "Skilled Professionals", desc: "Access to trained virtual assistants and specialists" },
@@ -354,6 +395,7 @@ const servicesData = {
 const allServicesOrder = [
   "customer-support",
   "it-outsourcing", 
+  "hr-outsourcing",
   "finance-accounting",
   "procurement-services",
   "bpo-services",
@@ -393,63 +435,44 @@ const ServicesPage = () => {
     <div className="min-h-screen bg-background">
       <ServicePageHeader />
       
-      {/* Hero Section - Clean Gradient Design */}
-      <section className={`relative py-20 md:py-32 overflow-hidden bg-gradient-to-br ${service.color}`}>
-        {/* Decorative Elements */}
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="absolute top-0 left-0 w-72 h-72 bg-white/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
-          <div className="absolute bottom-0 right-0 w-96 h-96 bg-white/5 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] border border-white/10 rounded-full" />
-          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[700px] border border-white/5 rounded-full" />
-        </div>
+      {/* Hero Section */}
+      <section className="relative py-24 bg-secondary overflow-hidden">
+        <div 
+          className="absolute inset-0 bg-cover bg-center opacity-20"
+          style={{ backgroundImage: `url(${service.heroImage})` }}
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-secondary via-secondary/90 to-secondary/70" />
         
         <div className="container mx-auto px-4 relative z-10">
-          <div className="max-w-4xl mx-auto text-center">
-            {/* Icon Badge */}
-            <div className="inline-flex items-center justify-center w-20 h-20 rounded-2xl bg-white/20 backdrop-blur-sm mb-6 shadow-xl">
+          <Link to="/#services" className="inline-flex items-center gap-2 text-white/60 hover:text-primary transition-colors mb-8">
+            <ArrowLeft className="h-4 w-4" />
+            Back to All Services
+          </Link>
+          
+          <div className="flex items-center gap-6 mb-6">
+            <div className={`w-20 h-20 rounded-2xl bg-gradient-to-br ${service.color} flex items-center justify-center shadow-lg`}>
               <Icon className="h-10 w-10 text-white" />
             </div>
-            
-            {/* Tagline */}
-            <p className="text-white/80 text-lg mb-4 tracking-wide">{service.tagline}</p>
-            
-            {/* Main Title */}
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              {service.title}
-            </h1>
-            
-            {/* Description */}
-            <p className="text-lg md:text-xl text-white/80 leading-relaxed mb-10 max-w-2xl mx-auto">
-              {service.description}
-            </p>
-            
-            {/* CTA Buttons */}
-            <div className="flex flex-wrap justify-center gap-4">
-              <Link to="/#contact">
-                <Button size="lg" className="bg-white text-foreground hover:bg-white/90 shadow-xl hover:shadow-2xl transition-all text-base px-8">
-                  Get Started
-                  <ArrowRight className="ml-2 h-5 w-5" />
-                </Button>
-              </Link>
-              <a href="tel:+919423840960">
-                <Button size="lg" className="bg-white/20 border-2 border-white text-white hover:bg-white hover:text-foreground backdrop-blur-sm text-base px-8 transition-all">
-                  <Phone className="mr-2 h-5 w-5" />
-                  Talk to Expert
-                </Button>
-              </a>
+            <div>
+              <h1 className="text-4xl md:text-5xl font-bold text-white">{service.title}</h1>
+              <p className="text-xl text-primary mt-2">{service.tagline}</p>
             </div>
           </div>
+          
+          <p className="text-white/80 text-lg max-w-3xl leading-relaxed">
+            {service.description}
+          </p>
         </div>
       </section>
 
-      {/* Stats Section */}
-      <section className="py-12 bg-muted/50 border-b border-border">
+      {/* Stats Bar */}
+      <section className="bg-primary py-8">
         <div className="container mx-auto px-4">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
             {service.stats.map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl md:text-4xl font-bold text-foreground">{stat.value}</div>
-                <div className="text-muted-foreground text-sm mt-1">{stat.label}</div>
+              <div key={stat.label}>
+                <div className="text-2xl md:text-3xl font-bold text-primary-foreground">{stat.value}</div>
+                <div className="text-primary-foreground/80 text-sm mt-1">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -457,7 +480,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Benefits Section */}
-      <section className="py-20 bg-background">
+      <section className="py-20 bg-muted/30">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Why Choose Our {service.title}</h2>
@@ -481,7 +504,7 @@ const ServicesPage = () => {
       </section>
 
       {/* Services Detail Section */}
-      <section className="py-20 bg-muted/30">
+      <section className="py-20 bg-background">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-foreground mb-4">Our Service Offerings</h2>
@@ -579,7 +602,7 @@ const ServicesPage = () => {
       <section className="py-16 bg-background">
         <div className="container mx-auto px-4">
           <h2 className="text-2xl font-bold text-foreground text-center mb-8">Explore Our Other Services</h2>
-          <div className="grid md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <div className="grid md:grid-cols-3 lg:grid-cols-6 gap-4">
             {allServicesOrder.filter(id => id !== serviceId).map((id) => {
               const s = servicesData[id as keyof typeof servicesData];
               const SIcon = s.icon;

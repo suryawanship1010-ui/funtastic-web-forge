@@ -7,8 +7,7 @@ import {
   Tag,
   ArrowLeft,
   Menu,
-  X,
-  Briefcase
+  X
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -20,7 +19,6 @@ const AdminLayout = () => {
 
   const navItems = [
     { href: "/admin", label: "Dashboard", icon: LayoutDashboard },
-    { href: "/admin/services", label: "Services", icon: Briefcase },
     { href: "/admin/inquiries", label: "Inquiries", icon: MessageSquare },
     { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { href: "/admin/blogs", label: "Blogs", icon: FileText },
