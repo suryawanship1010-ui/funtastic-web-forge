@@ -66,62 +66,78 @@ const BlogPage = () => {
       const from = (currentPage - 1) * POSTS_PER_PAGE;
       const to = from + POSTS_PER_PAGE - 1;
 
-      // Get all published blogs first
-      const { data: allBlogs, error: countError } = await supabase
-        .from("blogs")
-        .select("id")
-        .eq("status", "published");
-
-      if (countError) throw countError;
-
-      // Build filter for category
+      // Get category ID if selected
       let categoryId: string | null = null;
       if (selectedCategory) {
         const cat = categories.find((c) => c.slug === selectedCategory);
         if (cat) categoryId = cat.id;
       }
 
-      // Fetch paginated blogs
+      // If category is selected, get blog IDs from junction table first
+      let blogIds: string[] | null = null;
+      if (categoryId) {
+        const { data: junctionData } = await supabase
+          .from("blog_to_categories")
+          .select("blog_id")
+          .eq("category_id", categoryId);
+        blogIds = junctionData?.map((j) => j.blog_id) || [];
+      }
+
+      // Fetch blogs with optional filtering
       let blogsQuery = supabase
         .from("blogs")
-        .select("id, title, slug, excerpt, featured_image, published_at, created_at, category_id")
+        .select("id, title, slug, excerpt, featured_image, published_at, created_at")
         .eq("status", "published")
         .order("published_at", { ascending: false });
 
-      if (categoryId) {
-        blogsQuery = blogsQuery.eq("category_id", categoryId);
+      if (blogIds !== null) {
+        if (blogIds.length === 0) {
+          setBlogs([]);
+          setTotalCount(0);
+          setLoading(false);
+          return;
+        }
+        blogsQuery = blogsQuery.in("id", blogIds);
       }
 
-      const { data: blogsData, error } = await blogsQuery.range(from, to);
+      // Get total count first
+      const { data: allBlogs } = await blogsQuery;
+      setTotalCount(allBlogs?.length || 0);
+
+      // Now get paginated results
+      const { data: blogsData, error } = await supabase
+        .from("blogs")
+        .select("id, title, slug, excerpt, featured_image, published_at, created_at")
+        .eq("status", "published")
+        .order("published_at", { ascending: false })
+        .in("id", blogIds || allBlogs?.map(b => b.id) || [])
+        .range(from, to);
+
       if (error) throw error;
 
-      // Map blogs with category names
-      const blogsWithCategories = (blogsData || []).map((blog: any) => {
-        const cat = categories.find((c) => c.id === blog.category_id);
-        return {
-          id: blog.id,
-          title: blog.title,
-          slug: blog.slug,
-          excerpt: blog.excerpt,
-          featured_image: blog.featured_image,
-          published_at: blog.published_at,
-          created_at: blog.created_at,
-          category_name: cat?.name || null,
-        };
-      });
+      // Fetch category names for each blog using junction table
+      const blogsWithCategories = await Promise.all(
+        (blogsData || []).map(async (blog) => {
+          const { data: catJunction } = await supabase
+            .from("blog_to_categories")
+            .select("category_id")
+            .eq("blog_id", blog.id)
+            .limit(1);
+          
+          let categoryName: string | null = null;
+          if (catJunction && catJunction.length > 0) {
+            const cat = categories.find((c) => c.id === catJunction[0].category_id);
+            categoryName = cat?.name || null;
+          }
+
+          return {
+            ...blog,
+            category_name: categoryName,
+          };
+        })
+      );
 
       setBlogs(blogsWithCategories);
-      
-      // Count for pagination
-      if (categoryId) {
-        const filtered = (allBlogs || []).filter((b: any) => {
-          const fullBlog = blogsData?.find((fb: any) => fb.id === b.id);
-          return fullBlog?.category_id === categoryId;
-        });
-        setTotalCount(filtered.length || blogsWithCategories.length);
-      } else {
-        setTotalCount(allBlogs?.length || 0);
-      }
     } catch (error) {
       console.error("Error fetching blogs:", error);
     } finally {
