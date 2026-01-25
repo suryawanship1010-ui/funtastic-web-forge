@@ -39,13 +39,16 @@ const Analytics = () => {
         // Calculate page stats
         const pageCounts: Record<string, number> = {};
         visitorsData.forEach((v) => {
-          const page = v.page_visited || "/";
+          // Clean up page URL
+          let page = v.page_visited || "/";
+          // Remove query params for cleaner display
+          page = page.split("?")[0];
           pageCounts[page] = (pageCounts[page] || 0) + 1;
         });
         const sortedPages = Object.entries(pageCounts)
           .map(([page, views]) => ({ page, views }))
           .sort((a, b) => b.views - a.views)
-          .slice(0, 10);
+          .slice(0, 8);
         setPageStats(sortedPages);
 
         // Calculate daily stats for last 7 days
@@ -58,7 +61,7 @@ const Analytics = () => {
             return visitDate >= date && visitDate < nextDate;
           }).length;
           last7Days.push({
-            date: format(date, "MMM d"),
+            date: format(date, "EEE"),
             views,
           });
         }
@@ -85,63 +88,53 @@ const Analytics = () => {
     );
   }
 
-  return (
-    <div className="space-y-6">
-      <h1 className="text-3xl font-bold">Site Analytics</h1>
+  const maxViews = Math.max(...dailyStats.map((d) => d.views), 1);
 
-      {/* Summary Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+  return (
+    <div className="space-y-4">
+      <h1 className="text-2xl font-bold">Analytics</h1>
+
+      {/* Summary */}
+      <div className="grid grid-cols-3 gap-4">
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Total Page Views
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{visitors.length}</div>
+          <CardContent className="p-4 text-center">
+            <p className="text-2xl font-bold">{visitors.length}</p>
+            <p className="text-xs text-muted-foreground">Page Views</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Unique Sessions
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">{uniqueSessions}</div>
+          <CardContent className="p-4 text-center">
+            <p className="text-2xl font-bold">{uniqueSessions}</p>
+            <p className="text-xs text-muted-foreground">Sessions</p>
           </CardContent>
         </Card>
         <Card>
-          <CardHeader className="pb-2">
-            <CardTitle className="text-sm font-medium text-muted-foreground">
-              Avg Pages/Session
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="text-2xl font-bold">
+          <CardContent className="p-4 text-center">
+            <p className="text-2xl font-bold">
               {uniqueSessions > 0 ? (visitors.length / uniqueSessions).toFixed(1) : 0}
-            </div>
+            </p>
+            <p className="text-xs text-muted-foreground">Pages/Session</p>
           </CardContent>
         </Card>
       </div>
 
-      {/* Daily Traffic */}
+      {/* Weekly Chart */}
       <Card>
-        <CardHeader>
-          <CardTitle>Daily Traffic (Last 7 Days)</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium">This Week</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex items-end justify-between h-40 gap-2">
+          <div className="flex items-end justify-between h-32 gap-1">
             {dailyStats.map((day) => (
-              <div key={day.date} className="flex-1 flex flex-col items-center gap-2">
+              <div key={day.date} className="flex-1 flex flex-col items-center gap-1">
+                <span className="text-xs font-medium">{day.views}</span>
                 <div
-                  className="w-full bg-primary rounded-t transition-all"
+                  className="w-full bg-primary/80 rounded-t"
                   style={{
-                    height: `${Math.max((day.views / Math.max(...dailyStats.map((d) => d.views), 1)) * 120, 4)}px`,
+                    height: `${Math.max((day.views / maxViews) * 80, 4)}px`,
                   }}
                 />
-                <span className="text-xs text-muted-foreground">{day.date}</span>
-                <span className="text-xs font-medium">{day.views}</span>
+                <span className="text-[10px] text-muted-foreground">{day.date}</span>
               </div>
             ))}
           </div>
@@ -150,53 +143,16 @@ const Analytics = () => {
 
       {/* Top Pages */}
       <Card>
-        <CardHeader>
-          <CardTitle>Top Pages</CardTitle>
+        <CardHeader className="pb-2">
+          <CardTitle className="text-sm font-medium">Top Pages</CardTitle>
         </CardHeader>
-        <CardContent>
-          <div className="space-y-3">
-            {pageStats.map((page, index) => (
-              <div key={page.page} className="flex items-center justify-between">
-                <div className="flex items-center gap-3">
-                  <span className="text-sm text-muted-foreground w-6">{index + 1}.</span>
-                  <span className="text-sm font-medium">{page.page}</span>
-                </div>
-                <div className="flex items-center gap-2">
-                  <div
-                    className="h-2 bg-primary rounded"
-                    style={{
-                      width: `${(page.views / Math.max(...pageStats.map((p) => p.views), 1)) * 100}px`,
-                    }}
-                  />
-                  <span className="text-sm text-muted-foreground w-12 text-right">
-                    {page.views}
-                  </span>
-                </div>
-              </div>
-            ))}
-          </div>
-        </CardContent>
-      </Card>
-
-      {/* Recent Visits */}
-      <Card>
-        <CardHeader>
-          <CardTitle>Recent Visits</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <div className="space-y-2">
-            {visitors.slice(0, 20).map((visitor) => (
-              <div
-                key={visitor.id}
-                className="flex items-center justify-between text-sm py-2 border-b last:border-0"
-              >
-                <span className="font-medium">{visitor.page_visited}</span>
-                <span className="text-muted-foreground">
-                  {format(new Date(visitor.visited_at!), "PPp")}
-                </span>
-              </div>
-            ))}
-          </div>
+        <CardContent className="space-y-2">
+          {pageStats.map((page) => (
+            <div key={page.page} className="flex items-center justify-between text-sm">
+              <span className="truncate flex-1 mr-4">{page.page}</span>
+              <span className="text-muted-foreground">{page.views}</span>
+            </div>
+          ))}
         </CardContent>
       </Card>
     </div>

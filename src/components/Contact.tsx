@@ -39,24 +39,8 @@ const Contact = () => {
         return;
       }
 
-      // Create WhatsApp message
-      const whatsappNumber = "919423840960";
-      const whatsappMessage = encodeURIComponent(
-        `*New Inquiry from XView Global Website*\n\n` +
-        `*Name:* ${formData.name}\n` +
-        `*Email:* ${formData.email}\n` +
-        `${formData.phone ? `*Phone:* ${formData.phone}\n` : ""}` +
-        `${formData.company ? `*Company:* ${formData.company}\n` : ""}` +
-        `*Message:*\n${formData.message}`
-      );
-
-      toast.success("Thank you for your message! Redirecting to WhatsApp...");
+      toast.success("Thank you for your message! We'll get back to you soon.");
       setFormData({ name: "", email: "", phone: "", company: "", message: "" });
-      
-      // Open WhatsApp in new tab
-      setTimeout(() => {
-        window.open(`https://wa.me/${whatsappNumber}?text=${whatsappMessage}`, "_blank");
-      }, 1000);
 
     } catch (error) {
       console.error("Error submitting form:", error);
