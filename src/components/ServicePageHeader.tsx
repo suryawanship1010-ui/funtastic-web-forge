@@ -1,13 +1,25 @@
 import { useState, useEffect } from "react";
-import { Menu, X, Phone, Mail } from "lucide-react";
+import { Menu, X, Phone, Mail, User, LogOut, LayoutDashboard } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Link, useNavigate } from "react-router-dom";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { useAuth } from "@/contexts/AuthContext";
 import xviewLogo from "@/assets/xview-logo-new.jpg";
 
 const ServicePageHeader = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const { user, isAdmin, signOut } = useAuth();
   const navigate = useNavigate();
+
+  // Get user's full name from metadata
+  const userFullName = user?.user_metadata?.full_name || user?.email?.split("@")[0] || "User";
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,6 +41,11 @@ const ServicePageHeader = () => {
     setIsMobileMenuOpen(false);
     // Navigate to home page with hash
     navigate(href);
+  };
+
+  const handleSignOut = async () => {
+    await signOut();
+    setIsMobileMenuOpen(false);
   };
 
   return (
@@ -81,8 +98,39 @@ const ServicePageHeader = () => {
               ))}
             </nav>
 
-            {/* CTA Button */}
+            {/* CTA Button and Auth */}
             <div className="hidden lg:flex items-center gap-4">
+              {user ? (
+                <DropdownMenu>
+                  <DropdownMenuTrigger asChild>
+                    <Button variant="outline" className="gap-2">
+                      <User className="h-4 w-4" />
+                      {userFullName}
+                    </Button>
+                  </DropdownMenuTrigger>
+                  <DropdownMenuContent align="end">
+                    {isAdmin && (
+                      <>
+                        <DropdownMenuItem asChild>
+                          <Link to="/admin" className="flex items-center gap-2">
+                            <LayoutDashboard className="h-4 w-4" />
+                            Admin Dashboard
+                          </Link>
+                        </DropdownMenuItem>
+                        <DropdownMenuSeparator />
+                      </>
+                    )}
+                    <DropdownMenuItem onClick={handleSignOut} className="gap-2 text-destructive">
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </DropdownMenuItem>
+                  </DropdownMenuContent>
+                </DropdownMenu>
+              ) : (
+                <Button asChild variant="outline">
+                  <Link to="/login">Login</Link>
+                </Button>
+              )}
               <Button
                 onClick={() => handleNavClick("/#contact")}
                 className="bg-primary hover:bg-primary/90 text-primary-foreground shadow-lg hover:shadow-xl transition-all"
@@ -115,7 +163,27 @@ const ServicePageHeader = () => {
                   {link.label}
                 </button>
               ))}
-              <div className="pt-4 border-t border-border">
+              <div className="pt-4 border-t border-border space-y-2">
+                {user ? (
+                  <>
+                    {isAdmin && (
+                      <Button asChild variant="outline" className="w-full justify-start gap-2">
+                        <Link to="/admin" onClick={() => setIsMobileMenuOpen(false)}>
+                          <LayoutDashboard className="h-4 w-4" />
+                          Admin Dashboard
+                        </Link>
+                      </Button>
+                    )}
+                    <Button variant="outline" onClick={handleSignOut} className="w-full justify-start gap-2 text-destructive">
+                      <LogOut className="h-4 w-4" />
+                      Sign Out
+                    </Button>
+                  </>
+                ) : (
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}>Login</Link>
+                  </Button>
+                )}
                 <Button
                   onClick={() => handleNavClick("/#contact")}
                   className="w-full bg-primary hover:bg-primary/90"
