@@ -35,7 +35,7 @@ const BlogPost = () => {
     try {
       const { data, error } = await supabase
         .from("blogs")
-        .select("id, title, slug, content, excerpt, featured_image, published_at, created_at, category_id")
+        .select("id, title, slug, content, excerpt, featured_image, published_at, created_at")
         .eq("slug", slug)
         .eq("status", "published")
         .single();
@@ -44,16 +44,34 @@ const BlogPost = () => {
         if (error.code === "PGRST116") setNotFound(true);
         else throw error;
       } else if (data) {
+        // Fetch category from junction table
+        const { data: catJunction } = await supabase
+          .from("blog_to_categories")
+          .select("category_id")
+          .eq("blog_id", data.id)
+          .limit(1);
+        
         let categoryName: string | null = null;
-        if (data.category_id) {
+        if (catJunction && catJunction.length > 0) {
           const { data: catData } = await supabase
             .from("blog_categories")
             .select("name")
-            .eq("id", data.category_id)
+            .eq("id", catJunction[0].category_id)
             .single();
           categoryName = catData?.name || null;
         }
-        setBlog({ ...data, category_name: categoryName });
+
+        setBlog({
+          id: data.id,
+          title: data.title,
+          slug: data.slug,
+          content: data.content,
+          excerpt: data.excerpt,
+          featured_image: data.featured_image,
+          published_at: data.published_at,
+          created_at: data.created_at,
+          category_name: categoryName,
+        });
       }
     } catch (error) {
       console.error("Error fetching blog:", error);
