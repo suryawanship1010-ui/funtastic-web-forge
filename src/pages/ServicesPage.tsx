@@ -524,7 +524,7 @@ const ServicesPage = () => {
               </Button>
             </Link>
             <a href="tel:+919423840960">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10">
+              <Button size="lg" variant="outline" className="border-2 border-white bg-white/20 text-white backdrop-blur-sm hover:bg-white/30">
                 <Phone className="mr-2 h-5 w-5" />
                 Call Us Now
               </Button>
