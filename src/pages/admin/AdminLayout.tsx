@@ -4,6 +4,7 @@ import {
   MessageSquare, 
   BarChart3, 
   FileText,
+  Tag,
   ArrowLeft,
   Menu,
   X
@@ -21,6 +22,7 @@ const AdminLayout = () => {
     { href: "/admin/inquiries", label: "Inquiries", icon: MessageSquare },
     { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { href: "/admin/blogs", label: "Blogs", icon: FileText },
+    { href: "/admin/categories", label: "Categories", icon: Tag },
   ];
 
   const isActive = (path: string) => {

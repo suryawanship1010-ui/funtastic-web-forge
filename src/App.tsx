@@ -19,6 +19,7 @@ import Inquiries from "./pages/admin/Inquiries";
 import Analytics from "./pages/admin/Analytics";
 import Blogs from "./pages/admin/Blogs";
 import BlogEditorPage from "./pages/admin/BlogEditorPage";
+import Categories from "./pages/admin/Categories";
 
 const queryClient = new QueryClient();
 
@@ -45,6 +46,7 @@ const AppContent = () => {
         <Route path="inquiries" element={<Inquiries />} />
         <Route path="analytics" element={<Analytics />} />
         <Route path="blogs" element={<Blogs />} />
+        <Route path="categories" element={<Categories />} />
       </Route>
       <Route
         path="/admin/blogs/new"

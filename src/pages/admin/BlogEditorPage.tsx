@@ -42,6 +42,7 @@ import {
 } from "@/components/ui/popover";
 import { cn } from "@/lib/utils";
 import type { Tables } from "@/integrations/supabase/types";
+import ImageGallery from "@/components/admin/ImageGallery";
 
 type Blog = Tables<"blogs"> & { scheduled_at?: string | null };
 type Category = { id: string; name: string; slug: string };
@@ -592,7 +593,7 @@ const BlogEditorPage = () => {
                     <Quote className="h-4 w-4" />
                   </Button>
                 </div>
-                <div className="flex items-center gap-1 pl-3">
+                <div className="flex items-center gap-1 px-3 border-r">
                   <Button
                     type="button"
                     size="sm"
@@ -613,6 +614,25 @@ const BlogEditorPage = () => {
                   >
                     <Code className="h-4 w-4" />
                   </Button>
+                </div>
+                <div className="pl-3">
+                  <ImageGallery
+                    onInsert={(url, alt) => {
+                      insertFormatting(`![${alt || "image"}](${url})`);
+                    }}
+                    trigger={
+                      <Button
+                        type="button"
+                        size="sm"
+                        variant="ghost"
+                        title="Insert Image"
+                        className="h-8 px-2"
+                      >
+                        <ImagePlus className="h-4 w-4 mr-1" />
+                        <span className="text-xs">Gallery</span>
+                      </Button>
+                    }
+                  />
                 </div>
                 <div className="ml-auto flex items-center gap-2 text-xs text-muted-foreground">
                   <Sparkles className="h-3 w-3" />
