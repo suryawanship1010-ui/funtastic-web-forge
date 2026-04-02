@@ -34,6 +34,7 @@ const Header = () => {
     { href: "#about", label: "About Us" },
     { href: "#services", label: "Services" },
     { href: "/blog", label: "Blogs", isRoute: true },
+    { href: "/careers", label: "Careers", isRoute: true },
     { href: "#contact", label: "Contact" },
   ];
 
@@ -88,7 +89,7 @@ const Header = () => {
           <div className="flex items-center justify-between h-20">
             {/* Logo */}
             <Link to="/" className="flex items-center">
-              <img src={xviewLogo} alt="Xview Global Services LLP" className="h-14 w-auto" />
+              <img src={xviewLogo} alt="Xview Global Services LLP" className="h-14 w-auto mix-blend-multiply" />
             </Link>
 
             {/* Desktop Navigation */}

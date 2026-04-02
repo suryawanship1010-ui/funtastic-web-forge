@@ -15,9 +15,9 @@ const Footer = () => {
 
   const services = [
     "Customer Support Services",
-    "IT Outsourcing",
-    "Process Outsourcing",
-    "Finance & Procurement",
+    "IT Services",
+    "Finance & Accounting",
+    "Procurement & Purchasing",
     "Business Process Outsourcing",
     "Administrative Support"
   ];
@@ -26,7 +26,7 @@ const Footer = () => {
     { label: "Home", href: "#home" },
     { label: "About Us", href: "#about" },
     { label: "Services", href: "#services" },
-    { label: "Why Choose Us", href: "#why-us" },
+    { label: "Careers", href: "/careers" },
     { label: "Contact", href: "#contact" }
   ];
 
@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto rounded" />
+              <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto rounded brightness-0 invert" />
               <div>
                 <h3 className="text-xl font-bold text-white">
                   <span className="text-primary">Xview</span> Global Services LLP
@@ -95,7 +95,7 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                 <p className="text-white/60 text-sm">
-                  Office No. 1007, Vastushree Residency,<br />
+                  Flat No. 1007, Vastushree Residency,<br />
                   Sopankaka Nagar, Gujarwadi Road,<br />
                   Katraj, Pune - 411 046
                 </p>

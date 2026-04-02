@@ -13,6 +13,10 @@ import Register from "./pages/Register";
 import NotFound from "./pages/NotFound";
 import BlogPage from "./pages/Blog";
 import BlogPost from "./pages/BlogPost";
+import Careers from "./pages/Careers";
+import CareerDetail from "./pages/CareerDetail";
+import JobPosts from "./pages/admin/JobPosts";
+import JobApplications from "./pages/admin/JobApplications";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "./pages/admin/AdminLayout";
 import Dashboard from "./pages/admin/Dashboard";
@@ -34,6 +38,8 @@ const AppContent = () => {
       <Route path="/services/:serviceId" element={<ServicesPage />} />
       <Route path="/blog" element={<BlogPage />} />
       <Route path="/blog/:slug" element={<BlogPost />} />
+      <Route path="/careers" element={<Careers />} />
+      <Route path="/careers/:slug" element={<CareerDetail />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route
@@ -50,6 +56,8 @@ const AppContent = () => {
         <Route path="analytics" element={<Analytics />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="categories" element={<Categories />} />
+        <Route path="careers" element={<JobPosts />} />
+        <Route path="careers/:id/applications" element={<JobApplications />} />
       </Route>
       <Route
         path="/admin/blogs/new"

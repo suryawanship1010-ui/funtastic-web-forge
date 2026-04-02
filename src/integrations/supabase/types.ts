@@ -149,6 +149,107 @@ export type Database = {
         }
         Relationships: []
       }
+      job_applications: {
+        Row: {
+          admin_notes: string | null
+          applicant_name: string
+          cover_letter: string | null
+          created_at: string
+          email: string
+          id: string
+          job_post_id: string
+          phone: string | null
+          resume_url: string | null
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          admin_notes?: string | null
+          applicant_name: string
+          cover_letter?: string | null
+          created_at?: string
+          email: string
+          id?: string
+          job_post_id: string
+          phone?: string | null
+          resume_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          admin_notes?: string | null
+          applicant_name?: string
+          cover_letter?: string | null
+          created_at?: string
+          email?: string
+          id?: string
+          job_post_id?: string
+          phone?: string | null
+          resume_url?: string | null
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_applications_job_post_id_fkey"
+            columns: ["job_post_id"]
+            isOneToOne: false
+            referencedRelation: "job_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_posts: {
+        Row: {
+          created_at: string
+          department: string
+          description: string
+          employment_type: string
+          experience: string | null
+          id: string
+          is_active: boolean
+          location: string
+          requirements: string | null
+          salary_range: string | null
+          slug: string
+          status: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          department?: string
+          description?: string
+          employment_type?: string
+          experience?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string
+          requirements?: string | null
+          salary_range?: string | null
+          slug: string
+          status?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          department?: string
+          description?: string
+          employment_type?: string
+          experience?: string | null
+          id?: string
+          is_active?: boolean
+          location?: string
+          requirements?: string | null
+          salary_range?: string | null
+          slug?: string
+          status?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           avatar_url: string | null

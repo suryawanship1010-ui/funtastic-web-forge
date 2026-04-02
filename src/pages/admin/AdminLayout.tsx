@@ -8,7 +8,8 @@ import {
   ArrowLeft,
   Menu,
   X,
-  Briefcase
+  Briefcase,
+  UserCheck
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
@@ -25,6 +26,7 @@ const AdminLayout = () => {
     { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { href: "/admin/blogs", label: "Blogs", icon: FileText },
     { href: "/admin/categories", label: "Categories", icon: Tag },
+    { href: "/admin/careers", label: "Careers", icon: UserCheck },
   ];
 
   const isActive = (path: string) => {
