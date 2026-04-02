@@ -95,7 +95,7 @@ const Footer = () => {
               <div className="flex items-start gap-3">
                 <MapPin className="h-5 w-5 text-primary flex-shrink-0 mt-0.5" />
                 <p className="text-white/60 text-sm">
-                  Office No. 1007, Vastushree Residency,<br />
+                  Flat No. 1007, Vastushree Residency,<br />
                   Sopankaka Nagar, Gujarwadi Road,<br />
                   Katraj, Pune - 411 046
                 </p>
