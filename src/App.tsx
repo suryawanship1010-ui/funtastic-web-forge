@@ -56,6 +56,8 @@ const AppContent = () => {
         <Route path="analytics" element={<Analytics />} />
         <Route path="blogs" element={<Blogs />} />
         <Route path="categories" element={<Categories />} />
+        <Route path="careers" element={<JobPosts />} />
+        <Route path="careers/:id/applications" element={<JobApplications />} />
       </Route>
       <Route
         path="/admin/blogs/new"

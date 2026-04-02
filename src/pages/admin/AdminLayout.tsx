@@ -26,6 +26,7 @@ const AdminLayout = () => {
     { href: "/admin/analytics", label: "Analytics", icon: BarChart3 },
     { href: "/admin/blogs", label: "Blogs", icon: FileText },
     { href: "/admin/categories", label: "Categories", icon: Tag },
+    { href: "/admin/careers", label: "Careers", icon: UserCheck },
   ];
 
   const isActive = (path: string) => {
