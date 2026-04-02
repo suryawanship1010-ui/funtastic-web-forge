@@ -34,6 +34,7 @@ const ServicePageHeader = () => {
     { href: "/#about", label: "About Us" },
     { href: "/#services", label: "Services" },
     { href: "/blog", label: "Blogs" },
+    { href: "/careers", label: "Careers" },
     { href: "/#contact", label: "Contact" },
   ];
 
