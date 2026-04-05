@@ -26,6 +26,7 @@ import Blogs from "./pages/admin/Blogs";
 import BlogEditorPage from "./pages/admin/BlogEditorPage";
 import Categories from "./pages/admin/Categories";
 import AdminServices from "./pages/admin/Services";
+import AdminDepartments from "./pages/admin/Departments";
 
 const queryClient = new QueryClient();
 
@@ -58,6 +59,7 @@ const AppContent = () => {
         <Route path="categories" element={<Categories />} />
         <Route path="careers" element={<JobPosts />} />
         <Route path="careers/:id/applications" element={<JobApplications />} />
+        <Route path="departments" element={<AdminDepartments />} />
       </Route>
       <Route
         path="/admin/blogs/new"
