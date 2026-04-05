@@ -38,7 +38,7 @@ const Footer = () => {
           {/* Company Info */}
           <div>
             <div className="flex items-center gap-3 mb-6">
-              <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto rounded brightness-0 invert" />
+              <img src={xviewLogo} alt="Xview Global Services" className="h-12 w-auto rounded" />
               <div>
                 <h3 className="text-xl font-bold text-white">
                   <span className="text-primary">Xview</span> Global Services LLP
