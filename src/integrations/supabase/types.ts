@@ -149,6 +149,33 @@ export type Database = {
         }
         Relationships: []
       }
+      departments: {
+        Row: {
+          created_at: string
+          id: string
+          is_active: boolean
+          name: string
+          slug: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name: string
+          slug: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          name?: string
+          slug?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       job_applications: {
         Row: {
           admin_notes: string | null
@@ -192,6 +219,39 @@ export type Database = {
         Relationships: [
           {
             foreignKeyName: "job_applications_job_post_id_fkey"
+            columns: ["job_post_id"]
+            isOneToOne: false
+            referencedRelation: "job_posts"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      job_departments: {
+        Row: {
+          department_id: string
+          id: string
+          job_post_id: string
+        }
+        Insert: {
+          department_id: string
+          id?: string
+          job_post_id: string
+        }
+        Update: {
+          department_id?: string
+          id?: string
+          job_post_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_departments_department_id_fkey"
+            columns: ["department_id"]
+            isOneToOne: false
+            referencedRelation: "departments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "job_departments_job_post_id_fkey"
             columns: ["job_post_id"]
             isOneToOne: false
             referencedRelation: "job_posts"
@@ -249,6 +309,38 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      job_requirements: {
+        Row: {
+          created_at: string
+          display_order: number
+          id: string
+          job_post_id: string
+          requirement_text: string
+        }
+        Insert: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          job_post_id: string
+          requirement_text: string
+        }
+        Update: {
+          created_at?: string
+          display_order?: number
+          id?: string
+          job_post_id?: string
+          requirement_text?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "job_requirements_job_post_id_fkey"
+            columns: ["job_post_id"]
+            isOneToOne: false
+            referencedRelation: "job_posts"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       profiles: {
         Row: {
