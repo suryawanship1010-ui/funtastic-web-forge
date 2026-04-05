@@ -8,7 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { MapPin, Clock, Briefcase, Search, ArrowRight } from "lucide-react";
+import { MapPin, Clock, Briefcase, Search, ArrowRight, Building2 } from "lucide-react";
 import { Helmet } from "react-helmet-async";
 
 const Careers = () => {
@@ -30,15 +30,45 @@ const Careers = () => {
     },
   });
 
-  const departments = [...new Set(jobs?.map((j) => j.department).filter(Boolean) || [])];
+  const { data: departments } = useQuery({
+    queryKey: ["public-departments"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("departments")
+        .select("*")
+        .eq("is_active", true)
+        .order("name");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: jobDepts } = useQuery({
+    queryKey: ["public-job-departments"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("job_departments")
+        .select("*, departments(name, id)");
+      if (error) throw error;
+      return data;
+    },
+  });
+
   const types = [...new Set(jobs?.map((j) => j.employment_type).filter(Boolean) || [])];
+
+  const getJobDeptIds = (jobId: string) =>
+    jobDepts?.filter((jd) => jd.job_post_id === jobId).map((jd) => jd.department_id) || [];
+
+  const getJobDeptNames = (jobId: string) =>
+    jobDepts?.filter((jd) => jd.job_post_id === jobId).map((jd: any) => jd.departments?.name).filter(Boolean) || [];
 
   const filteredJobs = jobs?.filter((job) => {
     const matchesSearch =
       !searchQuery ||
       job.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      job.department.toLowerCase().includes(searchQuery.toLowerCase());
-    const matchesDept = departmentFilter === "all" || job.department === departmentFilter;
+      job.department?.toLowerCase().includes(searchQuery.toLowerCase());
+    const matchesDept =
+      departmentFilter === "all" || getJobDeptIds(job.id).includes(departmentFilter) || job.department === departmentFilter;
     const matchesType = typeFilter === "all" || job.employment_type === typeFilter;
     return matchesSearch && matchesDept && matchesType;
   });
@@ -75,7 +105,7 @@ const Careers = () => {
                 className="pl-10"
               />
             </div>
-            {departments.length > 0 && (
+            {departments && departments.length > 0 && (
               <Select value={departmentFilter} onValueChange={setDepartmentFilter}>
                 <SelectTrigger className="w-full md:w-48">
                   <SelectValue placeholder="Department" />
@@ -83,7 +113,7 @@ const Careers = () => {
                 <SelectContent>
                   <SelectItem value="all">All Departments</SelectItem>
                   {departments.map((d) => (
-                    <SelectItem key={d} value={d}>{d}</SelectItem>
+                    <SelectItem key={d.id} value={d.id}>{d.name}</SelectItem>
                   ))}
                 </SelectContent>
               </Select>
@@ -115,41 +145,51 @@ const Careers = () => {
             </div>
           ) : filteredJobs && filteredJobs.length > 0 ? (
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {filteredJobs.map((job) => (
-                <Link
-                  key={job.id}
-                  to={`/careers/${job.slug}`}
-                  className="bg-card rounded-xl p-6 border border-border hover:border-primary/50 hover:shadow-lg transition-all group"
-                >
-                  <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
-                    {job.title}
-                  </h3>
-                  <div className="flex flex-wrap gap-2 mb-4">
-                    {job.department && (
-                      <Badge variant="secondary" className="text-xs">
-                        <Briefcase className="h-3 w-3 mr-1" />
-                        {job.department}
-                      </Badge>
-                    )}
-                    {job.location && (
+              {filteredJobs.map((job) => {
+                const deptNames = getJobDeptNames(job.id);
+                return (
+                  <Link
+                    key={job.id}
+                    to={`/careers/${job.slug}`}
+                    className="bg-card rounded-xl p-6 border border-border hover:border-primary/50 hover:shadow-lg transition-all group"
+                  >
+                    <h3 className="text-lg font-bold text-foreground mb-2 group-hover:text-primary transition-colors">
+                      {job.title}
+                    </h3>
+                    <div className="flex flex-wrap gap-2 mb-4">
+                      {deptNames.length > 0 ? (
+                        deptNames.map((name, i) => (
+                          <Badge key={i} variant="secondary" className="text-xs">
+                            <Building2 className="h-3 w-3 mr-1" />
+                            {name}
+                          </Badge>
+                        ))
+                      ) : job.department ? (
+                        <Badge variant="secondary" className="text-xs">
+                          <Briefcase className="h-3 w-3 mr-1" />
+                          {job.department}
+                        </Badge>
+                      ) : null}
+                      {job.location && (
+                        <Badge variant="outline" className="text-xs">
+                          <MapPin className="h-3 w-3 mr-1" />
+                          {job.location}
+                        </Badge>
+                      )}
                       <Badge variant="outline" className="text-xs">
-                        <MapPin className="h-3 w-3 mr-1" />
-                        {job.location}
+                        <Clock className="h-3 w-3 mr-1" />
+                        {job.employment_type}
                       </Badge>
+                    </div>
+                    {job.experience && (
+                      <p className="text-sm text-muted-foreground mb-3">Experience: {job.experience}</p>
                     )}
-                    <Badge variant="outline" className="text-xs">
-                      <Clock className="h-3 w-3 mr-1" />
-                      {job.employment_type}
-                    </Badge>
-                  </div>
-                  {job.experience && (
-                    <p className="text-sm text-muted-foreground mb-3">Experience: {job.experience}</p>
-                  )}
-                  <div className="flex items-center text-primary text-sm font-medium">
-                    View Details <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </div>
-                </Link>
-              ))}
+                    <div className="flex items-center text-primary text-sm font-medium">
+                      View Details <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </Link>
+                );
+              })}
             </div>
           ) : (
             <div className="text-center py-16">
