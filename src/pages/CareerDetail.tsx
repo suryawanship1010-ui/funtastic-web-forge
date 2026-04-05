@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
-import { MapPin, Clock, Briefcase, ArrowLeft, Send } from "lucide-react";
+import { MapPin, Clock, Briefcase, ArrowLeft, Send, CheckCircle2, Building2 } from "lucide-react";
 import { toast } from "sonner";
 import { Helmet } from "react-helmet-async";
 
@@ -38,6 +38,35 @@ const CareerDetail = () => {
       return data;
     },
     enabled: !!slug,
+  });
+
+  // Fetch structured requirements
+  const { data: requirements } = useQuery({
+    queryKey: ["job-requirements", job?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("job_requirements")
+        .select("*")
+        .eq("job_post_id", job!.id)
+        .order("display_order");
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!job?.id,
+  });
+
+  // Fetch department names
+  const { data: jobDepts } = useQuery({
+    queryKey: ["job-departments", job?.id],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("job_departments")
+        .select("*, departments(name)")
+        .eq("job_post_id", job!.id);
+      if (error) throw error;
+      return data;
+    },
+    enabled: !!job?.id,
   });
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -78,6 +107,15 @@ const CareerDetail = () => {
       setSubmitting(false);
     }
   };
+
+  // Parse requirements: use structured data if available, else fallback to text
+  const requirementItems = requirements && requirements.length > 0
+    ? requirements.map((r) => r.requirement_text)
+    : job?.requirements
+      ? job.requirements.split("\n").filter(Boolean)
+      : [];
+
+  const deptNames = jobDepts?.map((jd: any) => jd.departments?.name).filter(Boolean) || [];
 
   if (isLoading) {
     return (
@@ -127,9 +165,13 @@ const CareerDetail = () => {
             <div className="lg:col-span-2">
               <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">{job.title}</h1>
               <div className="flex flex-wrap gap-2 mb-6">
-                {job.department && (
+                {deptNames.length > 0 ? (
+                  deptNames.map((name, i) => (
+                    <Badge key={i} variant="secondary"><Building2 className="h-3 w-3 mr-1" />{name}</Badge>
+                  ))
+                ) : job.department ? (
                   <Badge variant="secondary"><Briefcase className="h-3 w-3 mr-1" />{job.department}</Badge>
-                )}
+                ) : null}
                 {job.location && (
                   <Badge variant="outline"><MapPin className="h-3 w-3 mr-1" />{job.location}</Badge>
                 )}
@@ -147,10 +189,17 @@ const CareerDetail = () => {
                 </div>
               )}
 
-              {job.requirements && (
+              {requirementItems.length > 0 && (
                 <div className="mb-8">
                   <h2 className="text-xl font-semibold mb-3">Requirements</h2>
-                  <div className="prose prose-sm max-w-none text-muted-foreground whitespace-pre-wrap">{job.requirements}</div>
+                  <ul className="space-y-2">
+                    {requirementItems.map((req, i) => (
+                      <li key={i} className="flex items-start gap-2 text-muted-foreground">
+                        <CheckCircle2 className="h-5 w-5 text-primary shrink-0 mt-0.5" />
+                        <span>{req}</span>
+                      </li>
+                    ))}
+                  </ul>
                 </div>
               )}
 
